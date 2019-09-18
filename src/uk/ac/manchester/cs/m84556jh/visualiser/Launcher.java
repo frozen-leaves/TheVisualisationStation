@@ -27,6 +27,7 @@ public class Launcher extends PApplet {
 		textSize(50);
 		text("Note:"+note.toString(), 10, 50);
 		text("Freq:"+note.getFreq(), 10, 100);
+		text("Max Oct:"+spectrum.getMaxOctave(), 10, 150);
     }
 	
     public void draw() {
