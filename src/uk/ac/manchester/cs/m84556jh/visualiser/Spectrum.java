@@ -60,4 +60,13 @@ public class Spectrum {
 	  return maxOctave;
 	}
 	
+	//Determine the sum of the amplitude of all of the frequency bands in the FFT
+	public double getTotAmp(){
+		double curTotalAmp = 0.0;
+		for(int i = 0; i < spec.length; i++){
+			curTotalAmp += spec[i];
+		}
+		return curTotalAmp;
+	}
+	
 }

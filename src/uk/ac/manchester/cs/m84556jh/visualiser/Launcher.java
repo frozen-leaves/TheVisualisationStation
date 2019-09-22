@@ -1,12 +1,14 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
 import processing.core.PApplet;
+import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 
 public class Launcher extends PApplet {
 	
 	// Global Variables 
 	int fps = 30;
-	Spectrum spectrum; 
+	Spectrum spectrum;
+	Amplitude amp = new Amplitude(10*fps);
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -28,6 +30,8 @@ public class Launcher extends PApplet {
 		text("Note:"+note.toString(), 10, 50);
 		text("Freq:"+note.getFreq(), 10, 100);
 		text("Max Oct:"+spectrum.getMaxOctave(), 10, 150);
+		text("Max Amp:"+note.getAmp(), 10, 200);
+		text("Tot Amp:"+amp.calcSize(spectrum.getTotAmp()), 10, 250);
     }
 	
     public void draw() {
@@ -38,6 +42,5 @@ public class Launcher extends PApplet {
 		
 		spectrum.analyse();
 		printStats(spectrum.getMaxFreq());
-		
 	}
 }
