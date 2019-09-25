@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import processing.core.PApplet;
+import uk.ac.manchester.cs.m84556jh.colour.Col3;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 
@@ -45,21 +46,32 @@ public class Launcher extends PApplet {
     //Display stats about the soundfile in real time
     public void printStats(Note note) {
 		textSize(50);
-		text("Note:"+note.toString(), 10, 50);
-		text("Freq:"+note.getFreq(), 10, 100);
-		text("Max Oct:"+spectrum.getMaxOctave(), 10, 150);
-		text("Max Amp:"+note.getAmp(), 10, 200);
-		text("Tot Amp:"+amp.calcSize(spectrum.getTotAmp()), 10, 250);
+		text("Note:"+note.toString(), 10, 150);
+		text("Freq:"+note.getFreq(), 10, 200);
+		text("Max Oct:"+spectrum.getMaxOctave(), 10, 250);
+		text("Max Amp:"+note.getAmp(), 10, 300);
+		text("NoteCol:"+note.getCol(noteCols).toString(), 10, 350);
     }
 	
     public void draw() {
-    	// Set background color, noStroke and fill color
+    	// Setup for colours
 		background(204);
 		fill(0, 0, 255);
 		noStroke();
+		colorMode(HSB, 255, 255, 100);
+		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
 			printStats(spectrum.getMaxFreq());
+			double totAmp = amp.calcSize(spectrum.getTotAmp());
+			text("Tot Amp:"+totAmp, 10, 400);
+			
+			//Display rectangle of note colour, with size determined by max amp
+			Col3 noteCol = spectrum.getMaxFreq().getCol(noteCols);
+			fill(noteCol.getHue(), noteCol.getSat(), noteCol.getBri());
+			rectMode(CENTER);
+			rect((float)500.0,(float)50.0,(float)(10*totAmp),(float)90.0);
+			
 		}
 	}
 }
