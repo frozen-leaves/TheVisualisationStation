@@ -1,5 +1,8 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
+import uk.ac.manchester.cs.m84556jh.colour.Col3;
+import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+
 public class Note {
 	public static final String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 	private double freq;
@@ -29,6 +32,13 @@ public class Note {
 	
 	public int getIndex() {
 		return this.index;
+	}
+	
+	public Col3 getCol(ColPal pal) {
+		int colHue = pal.getCol(getIndex()).getHue();
+		int colSat = pal.getCol(getIndex()).getSat();
+		int colBri = getOctave()*10 + (getIndex()+1)*10/12;
+		return new Col3(colHue, colSat, colBri);
 	}
 	
 	public String toString() {
