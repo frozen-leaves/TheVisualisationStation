@@ -1,5 +1,7 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
+import java.io.File;
+
 import processing.core.PApplet;
 import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 
@@ -21,7 +23,11 @@ public class Launcher extends PApplet {
     public void setup() {
 	    background(255);
 	    frameRate(fps);
-	    spectrum = new Spectrum(this, "Runaway.mp3", 4096);
+	    selectInput("Select an MP3 file to use:", "mp3Selected");
+    }
+    
+    public void mp3Selected(File mp3) {
+    	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
     }
     
     //Display stats about the soundfile in real time
@@ -39,8 +45,9 @@ public class Launcher extends PApplet {
 		background(204);
 		fill(0, 0, 255);
 		noStroke();
-		
-		spectrum.analyse();
-		printStats(spectrum.getMaxFreq());
+		if(spectrum != null) {
+			spectrum.analyse();
+			printStats(spectrum.getMaxFreq());
+		}
 	}
 }
