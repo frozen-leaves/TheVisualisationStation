@@ -39,6 +39,10 @@ public class Key {
 				index = i;
 			}  
 		}
+		return this.toString();
+	}
+	
+	public String toString() {
 		return Note.notes[index];
 	}
 }
