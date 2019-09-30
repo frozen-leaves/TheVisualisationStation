@@ -18,12 +18,8 @@ public class NoteTest {
 	ColPal noteCols;
 	
 	@Before
-	public void setup() {
-		try {
-			noteCols = new ColPal(new File("colours.txt"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	public void setup() throws FileNotFoundException {
+		noteCols = new ColPal(new File("colours.txt"));
 	}
 
 	@Test

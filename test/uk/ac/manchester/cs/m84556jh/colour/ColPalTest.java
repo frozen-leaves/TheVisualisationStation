@@ -17,12 +17,8 @@ public class ColPalTest {
 	}
 
 	@Test
-	public void testGetCol() {
-		try {
-			noteCols = new ColPal(new File("colours.txt"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	public void testGetCol() throws FileNotFoundException {
+		noteCols = new ColPal(new File("colours.txt"));
 		assertTrue(((Integer)noteCols.getCol(0).getHue()).equals(54));
 	}
 
