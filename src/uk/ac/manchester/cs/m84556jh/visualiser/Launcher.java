@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import processing.core.PApplet;
 import uk.ac.manchester.cs.m84556jh.colour.Col3;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.visualiser.Key;
 import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 
 public class Launcher extends PApplet {
@@ -15,13 +16,14 @@ public class Launcher extends PApplet {
 	ColPal noteCols;
 	Spectrum spectrum;
 	Amplitude amp = new Amplitude(10*fps);
+	Key key = new Key(10*fps);
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
     }
   
     public void settings() {
-	    size(1000, 450);
+	    size(1000, 600);
     }
     
     public void setup() {
@@ -51,12 +53,13 @@ public class Launcher extends PApplet {
 		text("Max Oct:"+spectrum.getMaxOctave(), 10, 250);
 		text("Max Amp:"+note.getAmp(), 10, 300);
 		text("NoteCol:"+note.getCol(noteCols).toString(), 10, 350);
+		text("Key:"+key.calc(note.getIndex()), 10, 450);
     }
 	
     public void draw() {
     	// Setup for colours
 		background(204);
-		fill(0, 0, 255);
+		fill(0, 0, 0);
 		noStroke();
 		colorMode(HSB, 255, 255, 100);
 		
@@ -71,7 +74,6 @@ public class Launcher extends PApplet {
 			fill(noteCol.getHue(), noteCol.getSat(), noteCol.getBri());
 			rectMode(CENTER);
 			rect((float)500.0,(float)50.0,(float)(10*totAmp),(float)90.0);
-			
 		}
 	}
 }
