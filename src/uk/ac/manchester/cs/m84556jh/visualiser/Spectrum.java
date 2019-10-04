@@ -26,6 +26,22 @@ public class Spectrum {
 		fft.analyze(spec);
 	}
 	
+	//Determine the total amplitude of the bands that represent the snare and
+	//kick drums, which are usually used to mark out the beat of a song
+	public double getBeatAmp(){
+		double hzPerBand = 22050/(double)spec.length;
+		int lowKickBand = (int)Math.floor(60/hzPerBand);
+		int highKickBand = (int)Math.ceil(130/hzPerBand);
+		int lowSnareBand = (int)Math.floor(301/hzPerBand);
+		int highSnareBand = (int)Math.ceil(750/hzPerBand);
+		double beatAmpSum = 0.0;
+		for(int k = lowKickBand; k < highKickBand; k++)
+			beatAmpSum += spec[k];
+		for(int s = lowSnareBand; s < highSnareBand; s++)
+			beatAmpSum += spec[s];
+		return beatAmpSum;
+	}	
+	
 	//Determine the frequency band which has the highest amplitude in the FFT
 	public Note getMaxFreq(){
 		int curMaxIndex = 0;
