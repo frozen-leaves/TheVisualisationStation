@@ -34,6 +34,8 @@ public class Note {
 		return this.index;
 	}
 	
+	//Determine the colour of a note based on the colour pallette and
+	//the octave of the note
 	public Col3 getCol(ColPal pal) {
 		int colHue = pal.getCol(getIndex()).getHue();
 		int colSat = pal.getCol(getIndex()).getSat();
@@ -41,6 +43,7 @@ public class Note {
 		return new Col3(colHue, colSat, colBri);
 	}
 	
+	//Returns the note and its octave in its alphanumeric form
 	public String toString() {
 		return notes[this.index]+this.octave;
 	}

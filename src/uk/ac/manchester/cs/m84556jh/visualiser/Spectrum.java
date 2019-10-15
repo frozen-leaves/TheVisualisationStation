@@ -60,6 +60,7 @@ public class Spectrum {
 	public int getMaxOctave(){
 		double curMaxOctaveAmp = 0;
 		int maxOctave = 0;
+		//First look at the highest octave band, from C9 to B9
 		int upperBound = (int)Math.floor(((16.35*Math.pow(2, 9))/(samFreq/2))*bands);
 		int lowerBound = (int)Math.floor(upperBound/2);
 		for(int oct = 8; oct >= 0; oct--){
@@ -70,6 +71,7 @@ public class Spectrum {
 				curMaxOctaveAmp = curOctaveAmp;
 				maxOctave = oct;
 			}
+			//Since each octave halves frequency of one above, bounds can be halved each time
 			upperBound = lowerBound;
 			lowerBound = (int)Math.floor(upperBound/2);
 		}

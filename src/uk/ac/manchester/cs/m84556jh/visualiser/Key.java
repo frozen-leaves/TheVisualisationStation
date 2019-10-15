@@ -1,6 +1,6 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
-//A NoteTime records the notes that have been present for a number of previous
-//seconds in the music sample.
+//Key stores a previous number of notes found in the sample,
+//giving an estimate of the key of the music based on this
 
 import uk.ac.manchester.cs.m84556jh.buffer.CBInteger;
 
@@ -32,6 +32,8 @@ public class Key {
 		framesPassed++;
 		int curMaxVal = 0;
 		index = 0;
+		//For each key, find the total number of samples of the notes in that key
+		//If it is bigger than the previous maximum key, replace it as the maximum
 		for(int i=0; i<12; i++){
 			int keyTot = times[i] + times[(i+2)%12] + times[(i+4)%12] + times[(i+5)%12] + times[(i+7)%12] + times[(i+9)%12] + times[(i+11)%12];
 			if(keyTot > curMaxVal){
@@ -42,6 +44,7 @@ public class Key {
 		return this.toString();
 	}
 	
+	//Returns the root note of the key in its alphabetic form
 	public String toString() {
 		return Note.notes[index];
 	}
