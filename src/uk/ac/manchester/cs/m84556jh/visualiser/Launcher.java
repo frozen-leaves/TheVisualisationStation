@@ -77,6 +77,12 @@ public class Launcher extends PApplet {
 			fill(noteCol.getHue(), noteCol.getSat(), noteCol.getBri());
 			rectMode(CENTER);
 			rect((float)500.0,(float)50.0,(float)(10*totAmp),(float)90.0);
+			
+			//Display a red circle on each beat
+			if(bpm.isBeat()) {
+				fill(0, 100, 50);
+				circle((float)500.0, (float)550.0, (float)50.0);
+			}
 		}
 	}
 }
