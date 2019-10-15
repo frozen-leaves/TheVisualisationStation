@@ -1,11 +1,11 @@
 package uk.ac.manchester.cs.m84556jh.colour;
 
-public class Col3 {
+public class Col {
 	private int hue;
 	private int sat;
 	private int bri;
 	
-	public Col3(int givenHue, int givenSat, int givenBri) {
+	public Col(int givenHue, int givenSat, int givenBri) {
 		this.hue = givenHue;
 		this.sat = givenSat;
 		if(givenBri > 100)
@@ -26,7 +26,7 @@ public class Col3 {
 		return bri;
 	}
 	
-	public boolean equals(Col3 other) {
+	public boolean equals(Col other) {
 		if((this.hue == other.hue) && (this.sat == other.sat) && (this.bri == other.bri))
 			return true;
 		else

@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.manchester.cs.m84556jh.colour.Col3;
+import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 
 public class NoteTest {
@@ -48,8 +48,8 @@ public class NoteTest {
 	
 	@Test
 	public void testGetCol() {
-		assertTrue(noteA4.getCol(noteCols).equals(new Col3(64,275,48)));
-		assertTrue(noteG7.getCol(noteCols).equals(new Col3(0,0,76)));
+		assertTrue(noteA4.getCol(noteCols).equals(new Col(275,57,66)));
+		assertTrue(noteG7.getCol(noteCols).equals(new Col(0,0,4)));
 	}
 	
 	@Test

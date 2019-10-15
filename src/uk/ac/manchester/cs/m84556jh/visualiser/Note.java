@@ -1,6 +1,6 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
-import uk.ac.manchester.cs.m84556jh.colour.Col3;
+import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 
 public class Note {
@@ -36,11 +36,16 @@ public class Note {
 	
 	//Determine the colour of a note based on the colour pallette and
 	//the octave of the note
-	public Col3 getCol(ColPal pal) {
+	public Col getCol(ColPal pal) {
 		int colHue = pal.getCol(getIndex()).getHue();
 		int colSat = pal.getCol(getIndex()).getSat();
-		int colBri = getOctave()*10 + (getIndex()+1)*10/12;
-		return new Col3(colHue, colSat, colBri);
+		//Adjust the brightness of the base note, using the octave value,
+		int colBri = pal.getCol(getIndex()).getBri() + (getOctave()*2 - 10);
+		if(colBri < 0)
+			colBri = 0;
+		else if(colBri > 100)
+			colBri = 100;
+		return new Col(colHue, colSat, colBri);
 	}
 	
 	//Returns the note and its octave in its alphanumeric form

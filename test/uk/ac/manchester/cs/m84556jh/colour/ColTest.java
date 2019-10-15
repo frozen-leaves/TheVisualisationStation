@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class Col3Test {
+public class ColTest {
 	
-	Col3 colA = new Col3(20,30,102);
-	Col3 colB = new Col3(1,2,3);
-	Col3 colB2 = new Col3(1,2,3);
+	Col colA = new Col(20,30,102);
+	Col colB = new Col(1,2,3);
+	Col colB2 = new Col(1,2,3);
 
 	@Test
 	public void testGetHue() {
