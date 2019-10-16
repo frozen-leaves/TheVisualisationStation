@@ -1,15 +1,23 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
+import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.buffer.CBDouble;
+import uk.ac.manchester.cs.m84556jh.colour.Col;
 
 public class Amplitude {
 	
 	private CBDouble ampBuf;
+	private CBCol pixelBuf;
 	private int minSize;
+	private int prevSize;
+	private int curSize;
 	
-	public Amplitude(int ampBufSize, int minSize) {
+	public Amplitude(int ampBufSize, int minSize, int pixelBufSize) {
 		this.ampBuf = new CBDouble(ampBufSize);
 		this.minSize = minSize;
+		this.prevSize = 0;
+		this.curSize = 0;
+		this.pixelBuf = new CBCol(pixelBufSize);
 	}
 	
 	public double calcSize(double curAmp) {
@@ -23,6 +31,32 @@ public class Amplitude {
 		if(minAmp == maxAmp)
 			return minSize+((100-minSize)/2);
 		return minSize + (((curAmp - minAmp)/(maxAmp - minAmp))*(100 - minSize)); 
+	}
+	
+	//Take the current colour and amplitude and return the new pixel buffer
+	//with the correct number of elements for the current amplitude
+	public Col[] getPixelBuf(Col curCol, double curAmp) {
+		//Keep track of the previous size
+		prevSize = curSize;
+		//Get the current size of the amplitude, convert to number of pixels
+		curSize = (int)(calcSize(curAmp)/100*pixelBuf.getBufSize());
+		//If bigger than previous size, top up pixel buffer with pixels 
+		//of new colour equal to difference
+		//Otherwise, add 5 pixels of current colour
+		if(curSize > prevSize) {
+			for(int i = 0; i < curSize-prevSize; i++)
+				pixelBuf.add(curCol);
+		} else {
+			for(int i = 0; i < 5; i++)
+				pixelBuf.add(curCol);
+		}
+		//Produce array from pixel buffer of size required
+		Col[] array = new Col[curSize];
+		pixelBuf.setReadPoint();
+		for(int i = 0; i < curSize; i++) {
+			array[i] = pixelBuf.read();
+		}
+		return array;
 	}
 
 }

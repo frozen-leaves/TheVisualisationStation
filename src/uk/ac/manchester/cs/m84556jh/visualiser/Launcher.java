@@ -14,9 +14,11 @@ public class Launcher extends PApplet {
 	
 	// Global Variables 
 	int fps = 30;
+	int width = 1000;
+	int height = 600;
 	ColPal noteCols;
 	Spectrum spectrum;
-	Amplitude amp = new Amplitude(10*fps, 20);
+	Amplitude amp = new Amplitude(10*fps, 20, width/2);
 	Key key = new Key(10*fps);
 	BPM bpm = new BPM(60,30,fps);
 	
@@ -25,7 +27,7 @@ public class Launcher extends PApplet {
     }
   
     public void settings() {
-	    size(1000, 600);
+	    size(width, height);
     }
     
     public void setup() {
@@ -50,11 +52,11 @@ public class Launcher extends PApplet {
     //Display stats about the soundfile in real time
     public void printStats(Note note) {
 		textSize(50);
-		text("Note:"+note.toString(), 10, 150);
-		text("Freq:"+note.getFreq(), 10, 200);
-		text("Max Oct:"+spectrum.getMaxOctave(), 10, 250);
-		text("Max Amp:"+note.getAmp(), 10, 300);
-		text("NoteCol:"+note.getCol(noteCols).toString(), 10, 350);
+		text("Note:"+note.toString(), 10, 300);
+		text("Freq:"+note.getFreq(), 10, 350);
+		text("Max Oct:"+spectrum.getMaxOctave(), 10, 400);
+		//text("Max Amp:"+note.getAmp(), 10, 300);
+		//text("NoteCol:"+note.getCol(noteCols).toString(), 10, 350);
 		text("Key:"+key.calc(note.getIndex()), 10, 450);
 		text("BPM:"+bpm.calcBPM(spectrum.getBeatAmp()), 10, 500); 
     }
@@ -69,14 +71,20 @@ public class Launcher extends PApplet {
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
 			printStats(spectrum.getMaxFreq());
-			double totAmp = amp.calcSize(spectrum.getTotAmp());
-			text("Tot Amp:"+totAmp, 10, 400);
-			
-			//Display rectangle of note colour, with size determined by max amp
 			Col noteCol = spectrum.getMaxFreq().getCol(noteCols);
-			fill(noteCol.getHue(), noteCol.getSat(), noteCol.getBri());
-			rectMode(CENTER);
-			rect((float)500.0,(float)50.0,(float)(10*totAmp),(float)90.0);
+			Col[] ampCol = amp.getPixelBuf(noteCol, spectrum.getTotAmp());
+			
+			//Display rectangle of colours from colour array
+			for(int i = 0; i < ampCol.length; i++) {
+				//Set colour to the colour in the array element
+				fill(ampCol[i].getHue(), ampCol[i].getSat(), ampCol[i].getBri());
+				//Print the lines on the left and right of the display
+				rectMode(CENTER);
+				rect((float)(width/2 + 1 - ampCol.length + i),(float)100.0,(float)1.0,(float)180.0);
+				rect((float)(width/2 + ampCol.length - i),(float)100.0,(float)1.0,(float)180.0);
+				//line((float)(width/2 + 1 - ampCol.length + i),(float)5.0,(float)(width/2 + 1 - ampCol.length + i),(float)95.0);
+				//line((float)(width/2 + ampCol.length - i),(float)5.0,(float)(width/2 + ampCol.length - i),(float)95.0);
+			}
 			
 			//Display a red circle on each beat
 			if(bpm.isBeat()) {
