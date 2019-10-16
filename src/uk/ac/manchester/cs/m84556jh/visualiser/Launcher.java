@@ -16,7 +16,7 @@ public class Launcher extends PApplet {
 	int fps = 30;
 	ColPal noteCols;
 	Spectrum spectrum;
-	Amplitude amp = new Amplitude(10*fps);
+	Amplitude amp = new Amplitude(10*fps, 20);
 	Key key = new Key(10*fps);
 	BPM bpm = new BPM(60,30,fps);
 	

@@ -5,9 +5,11 @@ import uk.ac.manchester.cs.m84556jh.buffer.CBDouble;
 public class Amplitude {
 	
 	private CBDouble ampBuf;
+	private int minSize;
 	
-	public Amplitude(int ampBufSize) {
+	public Amplitude(int ampBufSize, int minSize) {
 		this.ampBuf = new CBDouble(ampBufSize);
+		this.minSize = minSize;
 	}
 	
 	public double calcSize(double curAmp) {
@@ -16,11 +18,11 @@ public class Amplitude {
 		//Get min and max amps in buffer
 		double minAmp = ampBuf.min();
 		double maxAmp = ampBuf.max();
-		//Return the percentage of the difference between the minimum and maximum 
-		//values that the current value is
+		//Calculate the size of colour on the screen, between minSize percent and 100 percent,
+		//based on the percentage difference between the min and max values that the current value is
 		if(minAmp == maxAmp)
-			return 50.0;
-		return ((curAmp - minAmp)/(maxAmp - minAmp)) * 100;
+			return minSize+((100-minSize)/2);
+		return minSize + (((curAmp - minAmp)/(maxAmp - minAmp))*(100 - minSize)); 
 	}
 
 }
