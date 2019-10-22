@@ -40,7 +40,7 @@ public class Note {
 		int colHue = pal.getCol(getIndex()).getHue();
 		int colSat = pal.getCol(getIndex()).getSat();
 		//Adjust the brightness of the base note, using the octave value,
-		int colBri = pal.getCol(getIndex()).getBri() + (getOctave()*2 - 10);
+		int colBri = pal.getCol(getIndex()).getBri() + (getOctave()*5 - 25);
 		if(colBri < 0)
 			colBri = 0;
 		else if(colBri > 100)
