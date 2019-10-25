@@ -33,11 +33,10 @@ public class Launcher extends PApplet {
     public void setup() {
 	    background(255);
 	    frameRate(fps);
-	    selectInput("Select an MP3 file to use:", "mp3Selected");
+	    selectInput("Select a colour file to use:", "colsSelected");
     }
     
     public void mp3Selected(File mp3) {
-    	selectInput("Select a colour file to use:", "colsSelected");
     	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
     }
     
@@ -47,6 +46,7 @@ public class Launcher extends PApplet {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+    	selectInput("Select an MP3 file to use:", "mp3Selected");
     }
     
     //Display stats about the soundfile in real time
