@@ -7,13 +7,15 @@ import uk.ac.manchester.cs.m84556jh.colour.Col;
 public class Amplitude {
 	
 	private CBDouble ampBuf;
+	private CBDouble ampPercBuf;
 	private CBCol pixelBuf;
 	private int minSize;
 	private int prevSize;
 	private int curSize;
 	
-	public Amplitude(int ampBufSize, int minSize, int pixelBufSize) {
+	public Amplitude(int ampBufSize, int minSize, int pixelBufSize, int ampPercBufSize) {
 		this.ampBuf = new CBDouble(ampBufSize);
+		this.ampPercBuf = new CBDouble(ampPercBufSize);
 		this.minSize = minSize;
 		this.prevSize = 0;
 		this.curSize = 0;
@@ -29,8 +31,9 @@ public class Amplitude {
 		//Calculate the size of colour on the screen, between minSize percent and 100 percent,
 		//based on the percentage difference between the min and max values that the current value is
 		if(minAmp == maxAmp)
-			return minSize+((100-minSize)/2);
-		return minSize + (((curAmp - minAmp)/(maxAmp - minAmp))*(100 - minSize)); 
+			ampPercBuf.add((double)(minSize + ((100-minSize)/2)));
+		ampPercBuf.add(minSize + (((curAmp - minAmp)/(maxAmp - minAmp))*(100 - minSize))); 
+		return ampPercBuf.avg();
 	}
 	
 	//Take the current colour and amplitude and return the new pixel buffer

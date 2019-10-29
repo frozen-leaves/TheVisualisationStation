@@ -6,9 +6,6 @@ import java.io.FileNotFoundException;
 import processing.core.PApplet;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
-import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
-import uk.ac.manchester.cs.m84556jh.visualiser.Key;
-import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 
 public class Launcher extends PApplet {
 	
@@ -18,7 +15,7 @@ public class Launcher extends PApplet {
 	int height = 600;
 	ColPal noteCols;
 	Spectrum spectrum;
-	Amplitude amp = new Amplitude(10*fps, 20, width/2);
+	Amplitude amp = new Amplitude(10*fps, 20, width/2, (int)(fps/3));
 	Key key = new Key(10*fps);
 	BPM bpm = new BPM(60,30,fps);
 	

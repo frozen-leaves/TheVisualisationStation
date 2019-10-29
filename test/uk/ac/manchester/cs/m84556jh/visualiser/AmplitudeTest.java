@@ -10,7 +10,7 @@ import uk.ac.manchester.cs.m84556jh.colour.Col;
 
 public class AmplitudeTest {
 	
-	Amplitude amp = new Amplitude(5,20,20);
+	Amplitude amp = new Amplitude(5,20,20,1);
 
 	@Test
 	public void testCalcSize() {
