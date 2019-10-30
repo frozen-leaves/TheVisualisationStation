@@ -3,6 +3,8 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 //giving an estimate of the key of the music based on this
 
 import uk.ac.manchester.cs.m84556jh.buffer.CBInteger;
+import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.colour.Col;
 
 public class Key {
 	private int[] times = {0,0,0,0,0,0,0,0,0,0,0,0};
@@ -47,5 +49,13 @@ public class Key {
 	//Returns the root note of the key in its alphabetic form
 	public String toString() {
 		return Note.notes[index];
+	}
+	
+	public Col getCol(ColPal pal) {
+		int colHue = pal.getCol(index).getHue();
+		int colSat = pal.getCol(index).getSat();
+		int colBri = pal.getCol(index).getBri();
+		return new Col(colHue, colSat, colBri);
+		
 	}
 }

@@ -89,6 +89,11 @@ public class Launcher extends PApplet {
 			Col noteCol = spectrum.getMaxFreq().getCol(noteCols);
 			Col[] ampCol = amp.getPixelBuf(noteCol, spectrum.getTotAmp());
 			
+			//If not printing stats (for main program), set the background colour to the key
+			Col keyCol = key.getCol(noteCols);
+			if(!printStats)
+				background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
+			
 			//Display rectangle of colours from colour array
 			for(int i = 0; i < ampCol.length; i++) {
 				//Set colour to the colour in the array element
