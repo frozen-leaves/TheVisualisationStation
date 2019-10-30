@@ -1,5 +1,7 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -12,8 +14,9 @@ public class Launcher extends PApplet {
 	
 	// Global Variables 
 	int fps;
-	int width = 1920;
-	int height = 1080;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int width = (int)screenSize.getWidth();
+	int height = (int)screenSize.getHeight();
 	ColPal noteCols;
 	Spectrum spectrum;
 	Amplitude amp;
