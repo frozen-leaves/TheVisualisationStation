@@ -10,14 +10,16 @@ import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 public class Launcher extends PApplet {
 	
 	// Global Variables 
-	int fps = 30;
-	int width = 1000;
-	int height = 600;
+	int fps;
+	int width = 1920;
+	int height = 1080;
 	ColPal noteCols;
 	Spectrum spectrum;
-	Amplitude amp = new Amplitude(10*fps, 20, width/2, (int)(fps/3));
-	Key key = new Key(10*fps);
-	BPM bpm = new BPM(60,30,fps);
+	Amplitude amp;
+	Key key;
+	BPM bpm;
+	boolean printStats = false;
+	
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -29,12 +31,20 @@ public class Launcher extends PApplet {
     
     public void setup() {
 	    background(255);
-	    frameRate(fps);
+	    //Set parameters from parameter dialog
+	    Parameters p = new Parameters();  
+    	fps = p.fps;
+    	frameRate(fps);
+    	amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width/2, (int)(p.ampPerBufSecs*fps));
+    	key = new Key(p.keyBufSecs*fps);
+    	bpm = new BPM(3*fps, p.bpmBufSize, fps);
 	    selectInput("Select a colour file to use:", "colsSelected");
+	    
     }
     
     public void mp3Selected(File mp3) {
     	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
+    	
     }
     
     public void colsSelected(File cols) {
@@ -47,15 +57,13 @@ public class Launcher extends PApplet {
     }
     
     //Display stats about the soundfile in real time
-    public void printStats(Note note) {
+    public void printStats(Note note, String noteKey, double curBPM) {
 		textSize(50);
 		text("Note:"+note.toString(), 10, 300);
 		text("Freq:"+note.getFreq(), 10, 350);
 		text("Max Oct:"+spectrum.getMaxOctave(), 10, 400);
-		//text("Max Amp:"+note.getAmp(), 10, 300);
-		//text("NoteCol:"+note.getCol(noteCols).toString(), 10, 350);
-		text("Key:"+key.calc(note.getIndex()), 10, 450);
-		text("BPM:"+bpm.calcBPM(spectrum.getBeatAmp()), 10, 500); 
+		text("Key:"+noteKey, 10, 450);
+		text("BPM:"+curBPM, 10, 500); 
     }
 	
     public void draw() {
@@ -67,7 +75,10 @@ public class Launcher extends PApplet {
 		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
-			printStats(spectrum.getMaxFreq());
+			String noteKey = key.calc(spectrum.getMaxFreq().getIndex());
+			double curBPM = bpm.calcBPM(spectrum.getBeatAmp());
+			if(printStats)
+				printStats(spectrum.getMaxFreq(), noteKey, curBPM);
 			Col noteCol = spectrum.getMaxFreq().getCol(noteCols);
 			Col[] ampCol = amp.getPixelBuf(noteCol, spectrum.getTotAmp());
 			
@@ -77,16 +88,19 @@ public class Launcher extends PApplet {
 				fill(ampCol[i].getHue(), ampCol[i].getSat(), ampCol[i].getBri());
 				//Print the lines on the left and right of the display
 				rectMode(CENTER);
-				rect((float)(width/2 + 1 - ampCol.length + i),(float)100.0,(float)1.0,(float)180.0);
-				rect((float)(width/2 + ampCol.length - i),(float)100.0,(float)1.0,(float)180.0);
-				//line((float)(width/2 + 1 - ampCol.length + i),(float)5.0,(float)(width/2 + 1 - ampCol.length + i),(float)95.0);
-				//line((float)(width/2 + ampCol.length - i),(float)5.0,(float)(width/2 + ampCol.length - i),(float)95.0);
+				if(printStats) {
+					rect((float)(width/2 + 1 - ampCol.length + i),(float)100.0,(float)1.0,(float)180.0);
+					rect((float)(width/2 + ampCol.length - i),(float)100.0,(float)1.0,(float)180.0);
+				}else {
+					rect((float)(width/2 + 1 - ampCol.length + i),(float)(height/2),(float)1.0,(float)height);
+					rect((float)(width/2 + ampCol.length - i),(float)(height/2),(float)1.0,(float)height);
+				}
 			}
 			
 			//Display a red circle on each beat
 			if(bpm.isBeat()) {
 				fill(0, 100, 50);
-				circle((float)500.0, (float)550.0, (float)50.0);
+				circle((float)(width/2), (float)(height-50), (float)50.0);
 			}
 		}
 	}
