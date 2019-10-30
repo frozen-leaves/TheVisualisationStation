@@ -13,9 +13,14 @@ public class Note {
 	public Note(double givenFreq, double givenAmp) {
 		this.freq = givenFreq;
 		this.amplitude = givenAmp;
-		int noteIncrements = (int)Math.round((12*Math.log(givenFreq/16.35))/Math.log(2));
-		this.octave = noteIncrements/12;
-		this.index = noteIncrements%12;
+		if(givenFreq < 16.35) {
+			this.octave = 0;
+			this.index = 0;
+		}else {
+			int noteIncrements = (int)Math.round((12*Math.log(givenFreq/16.35))/Math.log(2));
+			this.octave = noteIncrements/12;
+			this.index = noteIncrements%12;
+		}
 	}
 	
 	public double getFreq() {
