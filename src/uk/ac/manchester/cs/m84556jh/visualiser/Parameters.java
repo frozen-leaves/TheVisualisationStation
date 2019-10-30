@@ -4,6 +4,8 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -67,6 +69,8 @@ public class Parameters extends JDialog implements ActionListener {
 	    //Make this class the action listener for each of the buttons
 	    setButton.addActionListener(this);
 	    defaultButton.addActionListener(this);
+	    ImageIcon img = new ImageIcon("icon.png");
+	    setIconImage(img.getImage());
 	    setDefaultCloseOperation(HIDE_ON_CLOSE);
 	    pack();
 	    setVisible(true);

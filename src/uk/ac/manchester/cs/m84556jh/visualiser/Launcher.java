@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 
@@ -31,6 +32,9 @@ public class Launcher extends PApplet {
     
     public void setup() {
 	    background(255);
+	    PImage icon = loadImage("icon.png");
+	    surface.setIcon(icon);
+	    surface.setTitle("Visualiser");
 	    //Set parameters from parameter dialog
 	    Parameters p = new Parameters();  
     	fps = p.fps;
