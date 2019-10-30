@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class Parameters extends JDialog implements ActionListener {
@@ -34,7 +35,7 @@ public class Parameters extends JDialog implements ActionListener {
 
 	public Parameters() {
 		setModalityType(DEFAULT_MODALITY_TYPE);
-	    setTitle("Advanced Parameters");
+	    setTitle("Application Parameters");
 	    Container contents = getContentPane();
 	    contents.setLayout(new GridLayout(0,2));
 	    JLabel fpsLabel = new JLabel("Frames Per Second (10-120):");
@@ -75,13 +76,18 @@ public class Parameters extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    //Check which button has been clicked
 	    if (event.getSource() == setButton) {
-	    	fps = Integer.parseInt(fpsTextField.getText());
-	    	ampBufSecs = Integer.parseInt(ampBufSecsTextField.getText());
-	    	ampPerBufSecs = Double.parseDouble(ampPerBufSecsTextField.getText());
-	    	ampMinSize = Integer.parseInt(ampMinSizeTextField.getText());
-	    	bpmBufSize = Integer.parseInt(bpmBufSizeTextField.getText());
-	    	keyBufSecs = Integer.parseInt(keyBufSecsTextField.getText());
-	    	dispose();
+	    	try {
+	    		fps = Integer.parseInt(fpsTextField.getText());
+		    	ampBufSecs = Integer.parseInt(ampBufSecsTextField.getText());
+		    	ampPerBufSecs = Double.parseDouble(ampPerBufSecsTextField.getText());
+		    	ampMinSize = Integer.parseInt(ampMinSizeTextField.getText());
+		    	bpmBufSize = Integer.parseInt(bpmBufSizeTextField.getText());
+		    	keyBufSecs = Integer.parseInt(keyBufSecsTextField.getText());
+		    	dispose();
+	    	} catch(NumberFormatException e){
+	    		JOptionPane.showMessageDialog(null, "Please ensure all the values entered are numbers in the range required", "Error", JOptionPane.ERROR_MESSAGE); 
+	    	}
+	    	
 	    }//end if
 	    else {
 	    	dispose();
