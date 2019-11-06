@@ -23,7 +23,7 @@ public class Launcher extends PApplet {
 	Key key;
 	BPM bpm;
 	boolean printStats = false;
-	
+	String visType = "circle";
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -42,7 +42,12 @@ public class Launcher extends PApplet {
 	    Parameters p = new Parameters();  
     	fps = p.fps;
     	frameRate(fps);
-    	amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width/2, (int)(p.ampPerBufSecs*fps));
+    	//If drawing a circle, size of buffer must be min of width and height
+    	if(visType == "rect")
+    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width/2, (int)(p.ampPerBufSecs*fps));
+    	else
+    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, min(width,height), (int)(p.ampPerBufSecs*fps));
+    		
     	key = new Key(p.keyBufSecs*fps);
     	bpm = new BPM(3*fps, p.bpmBufSize, fps);
 	    selectInput("Select a colour file to use:", "colsSelected");
@@ -103,9 +108,11 @@ public class Launcher extends PApplet {
 				if(printStats) {
 					rect((float)(width/2 + 1 - ampCol.length + i),(float)100.0,(float)1.0,(float)180.0);
 					rect((float)(width/2 + ampCol.length - i),(float)100.0,(float)1.0,(float)180.0);
-				}else {
+				}else if(visType == "rect"){
 					rect((float)(width/2 + 1 - ampCol.length + i),(float)(height/2),(float)1.0,(float)height);
 					rect((float)(width/2 + ampCol.length - i),(float)(height/2),(float)1.0,(float)height);
+				}else {
+					circle((float)(width/2), (float)(height/2), (float)(ampCol.length - i));
 				}
 			}
 			
