@@ -111,8 +111,14 @@ public class Launcher extends PApplet {
 			
 			//Display a red circle on each beat
 			if(bpm.isBeat()) {
-				fill(0, 100, 50);
-				circle((float)(width/2), (float)(height-50), (float)50.0);
+				if(printStats) {
+					fill(0, 100, 50);
+					circle((float)(width/2), (float)(height-50), (float)50.0);
+				} else {
+					fill(0, 0, 100);
+					circle((float)(width/2), (float)(height-200), (float)200.0);
+				}
+				
 			}
 		}
 	}
