@@ -23,7 +23,7 @@ public class Launcher extends PApplet {
 	Key key;
 	BPM bpm;
 	boolean printStats = false;
-	String visType = "circle";
+	String visType;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -50,6 +50,9 @@ public class Launcher extends PApplet {
     		
     	key = new Key(p.keyBufSecs*fps);
     	bpm = new BPM(3*fps, p.bpmBufSize, fps);
+    	//Get user to choose visualisation type
+    	Style s = new Style();
+    	visType = s.style;
 	    selectInput("Select a colour file to use:", "colsSelected");
 	    
     }
