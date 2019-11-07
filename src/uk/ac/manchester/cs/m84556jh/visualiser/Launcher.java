@@ -42,6 +42,9 @@ public class Launcher extends PApplet {
 	    Parameters p = new Parameters();  
     	fps = p.fps;
     	frameRate(fps);
+    	//Get user to choose visualisation type
+    	Style s = new Style();
+    	visType = s.style;
     	//If drawing a circle, size of buffer must be min of width and height
     	if(visType == "rect")
     		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width/2, (int)(p.ampPerBufSecs*fps));
@@ -50,9 +53,6 @@ public class Launcher extends PApplet {
     		
     	key = new Key(p.keyBufSecs*fps);
     	bpm = new BPM(3*fps, p.bpmBufSize, fps);
-    	//Get user to choose visualisation type
-    	Style s = new Style();
-    	visType = s.style;
 	    selectInput("Select a colour file to use:", "colsSelected");
 	    
     }
