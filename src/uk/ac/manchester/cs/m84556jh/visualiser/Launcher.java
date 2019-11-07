@@ -45,10 +45,10 @@ public class Launcher extends PApplet {
     	Style s = new Style();
     	visType = s.style;
     	//If drawing a circle, size of buffer must be min of width and height
-    	if(visType == "rect")
-    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width/2, (int)(p.ampPerBufSecs*fps));
-    	else
+    	if(visType == "circle")
     		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, min(width,height), (int)(p.ampPerBufSecs*fps));
+    	else
+    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width/2, (int)(p.ampPerBufSecs*fps));
     		
     	key = new Key(p.keyBufSecs*fps);
     	bpm = new BPM(3*fps, p.bpmBufSize, fps);
