@@ -102,7 +102,8 @@ public class Launcher extends PApplet {
 			if(!printStats)
 				background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
 			
-			//Display rectangle of colours from colour array
+			Col lastCol = null;
+			//Display shape of colours from colour array
 			for(int i = 0; i < ampCol.length; i++) {
 				//Set colour to the colour in the array element
 				fill(ampCol[i].getHue(), ampCol[i].getSat(), ampCol[i].getBri());
@@ -115,7 +116,10 @@ public class Launcher extends PApplet {
 					rect((float)(width/2 + 1 - ampCol.length + i),(float)(height/2),(float)1.0,(float)height);
 					rect((float)(width/2 + ampCol.length - i),(float)(height/2),(float)1.0,(float)height);
 				}else {
-					circle((float)(width/2), (float)(height/2), (float)(ampCol.length - i));
+					if(lastCol == null || !(lastCol.equals(ampCol[i]))) {
+						circle((float)(width/2), (float)(height/2), (float)(ampCol.length - i));
+						lastCol = ampCol[i];
+					}  
 				}
 			}
 			
