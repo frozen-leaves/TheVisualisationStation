@@ -22,7 +22,6 @@ public class Launcher extends PApplet {
 	Amplitude amp;
 	Key key;
 	BPM bpm;
-	boolean printStats = false;
 	String visType;
 	
 	public static void main(String[] args) {
@@ -92,14 +91,14 @@ public class Launcher extends PApplet {
 			spectrum.analyse();
 			String noteKey = key.calc(spectrum.getMaxFreq().getIndex());
 			double curBPM = bpm.calcBPM(spectrum.getBeatAmp());
-			if(printStats)
+			if(visType == "stats")
 				printStats(spectrum.getMaxFreq(), noteKey, curBPM);
 			Col noteCol = spectrum.getMaxFreq().getCol(noteCols);
 			Col[] ampCol = amp.getPixelBuf(noteCol, spectrum.getTotAmp());
 			
 			//If not printing stats (for main program), set the background colour to the key
 			Col keyCol = key.getCol(noteCols);
-			if(!printStats)
+			if(visType != "stats")
 				background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
 			
 			Col lastCol = null;
@@ -109,7 +108,7 @@ public class Launcher extends PApplet {
 				fill(ampCol[i].getHue(), ampCol[i].getSat(), ampCol[i].getBri());
 				//Print the lines on the left and right of the display
 				rectMode(CENTER);
-				if(printStats) {
+				if(visType == "stats") {
 					rect((float)(width/2 + 1 - ampCol.length + i),(float)100.0,(float)1.0,(float)180.0);
 					rect((float)(width/2 + ampCol.length - i),(float)100.0,(float)1.0,(float)180.0);
 				}else if(visType == "rect"){
@@ -125,7 +124,7 @@ public class Launcher extends PApplet {
 			
 			//Display a red circle on each beat
 			if(bpm.isBeat()) {
-				if(printStats) {
+				if(visType == "stats") {
 					fill(0, 100, 50);
 					circle((float)(width/2), (float)(height-50), (float)50.0);
 				} else {

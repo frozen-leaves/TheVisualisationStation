@@ -18,6 +18,7 @@ public class Style extends JDialog implements ActionListener {
 	
 	private final JButton rectButton = new JButton("Rectangular");
 	private final JButton circleButton = new JButton("Circular");
+	private final JButton statsButton = new JButton("Print Stats");
 	  
 
 	public Style() {
@@ -27,9 +28,11 @@ public class Style extends JDialog implements ActionListener {
 	    contents.setLayout(new GridLayout(0,2));
 	    contents.add(rectButton);
 	    contents.add(circleButton);
+	    contents.add(statsButton);
 	    //Make this class the action listener for each of the buttons
 	    rectButton.addActionListener(this);
 	    circleButton.addActionListener(this);
+	    statsButton.addActionListener(this);
 	    ImageIcon img = new ImageIcon("icon.png");
 	    setIconImage(img.getImage());
 	    setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -43,8 +46,11 @@ public class Style extends JDialog implements ActionListener {
 	    if (event.getSource() == rectButton) {
 	    	dispose();
 	    }//end if
-	    else {
+	    else if(event.getSource() == circleButton){
 	    	style = "circle";
+	    	dispose();
+	    } else {
+	    	style = "stats";
 	    	dispose();
 	    }
 	    pack();
