@@ -48,8 +48,8 @@ public class NoteTest {
 	
 	@Test
 	public void testGetCol() {
-		assertTrue(noteA4.getCol(noteCols).equals(new Col(275,57,66)));
-		assertTrue(noteG7.getCol(noteCols).equals(new Col(0,0,4)));
+		assertTrue(noteA4.getCol(noteCols).equals(new Col(275,57,63)));
+		assertTrue(noteG7.getCol(noteCols).equals(new Col(0,0,10)));
 	}
 	
 	@Test
