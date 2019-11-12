@@ -2,13 +2,22 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import uk.ac.manchester.cs.m84556jh.colour.Col;
+import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 
 public class KeyTest {
 	
 	//Array will store last 14 samples added
 	private Key nt = new Key(14);
+	private ColPal colP;
+	
+	
 	
 	@Before
 	public void setup() {
@@ -27,6 +36,12 @@ public class KeyTest {
 		nt.calc(11);
 		nt.calc(1);
 		nt.calc(1);
+		try {
+			colP = new ColPal(new File("colours.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Test
@@ -42,6 +57,14 @@ public class KeyTest {
 	@Test
 	public void testGetKey() {
 		assertTrue(nt.toString().equals("D"));
+	}
+	
+	@Test
+	public void testGetCol() {
+		Col ntCol = nt.getCol(colP);
+		assertEquals(ntCol.getHue(), 240);
+		assertEquals(ntCol.getSat(), 100);
+		assertEquals(ntCol.getBri(), 50);
 	}
 
 }
