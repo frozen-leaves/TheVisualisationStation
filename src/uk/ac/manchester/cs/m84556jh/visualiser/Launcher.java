@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 
@@ -22,7 +23,9 @@ public class Launcher extends PApplet {
 	Key key;
 	BPM bpm;
 	String visType;
-	Visualisation vis = new Visualisation(this);
+	Visualisation vis; 
+	PGraphics pg;
+	int x = 1;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -34,7 +37,9 @@ public class Launcher extends PApplet {
     
     public void setup() {
 	    background(255);
+	    vis = new Visualisation(this);
 	    PImage icon = loadImage("icon.png");
+	    pg = createGraphics(width, height);
 	    surface.setIcon(icon);
 	    surface.setTitle("Visualiser");
 	    //Set parameters from parameter dialog
@@ -75,17 +80,21 @@ public class Launcher extends PApplet {
 		noStroke();
 		colorMode(HSB, 255, 100, 100);
 		
+		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
 			
-			vis.draw(visType, 
+			
+			
+			
+			image(vis.draw(visType, 
 					 key.calc(spectrum.getMaxFreq().getIndex()), 
 					 key.getCol(noteCols), 
 					 bpm.calcBPM(spectrum.getBeatAmp()), 
 					 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
 					 bpm.isBeat(),
 					 spectrum.getMaxFreq(),
-					 spectrum.getMaxOctave());
+					 spectrum.getMaxOctave()), 0, 0);
 			
 		}
 	}
