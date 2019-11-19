@@ -37,11 +37,15 @@ public class Visualisation {
 			//Print the correct type of visualisation, based on type
 			app.rectMode(PConstants.CENTER);
 			if(type == "stats") {
-				app.rect((float)(app.width/2 + 1 - ampCol.length + i),(float)100.0,(float)1.0,(float)180.0);
-				app.rect((float)(app.width/2 + ampCol.length - i),(float)100.0,(float)1.0,(float)180.0);
+				if(lastCol == null || !(lastCol.equals(ampCol[i]))) {
+					app.rect((float)(app.width/2),(float)(100.0),(float)ampCol.length - i,(float)(180.0));
+					lastCol = ampCol[i];
+				}
 			}else if(type == "rect"){
-				app.rect((float)(app.width/2 + 1 - ampCol.length + i),(float)(app.height/2),(float)1.0,(float)app.height);
-				app.rect((float)(app.width/2 + ampCol.length - i),(float)(app.height/2),(float)1.0,(float)app.height);
+				if(lastCol == null || !(lastCol.equals(ampCol[i]))) {
+					app.rect((float)(app.width/2),(float)(app.height/2),(float)ampCol.length - i,(float)app.height);
+					lastCol = ampCol[i];
+				}
 			}else {
 				if(lastCol == null || !(lastCol.equals(ampCol[i]))) {
 					app.circle((float)(app.width/2), (float)(app.height/2), (float)(ampCol.length - i));

@@ -48,7 +48,7 @@ public class Launcher extends PApplet {
     	if(visType == "circle")
     		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, min(width,height), (int)(p.ampPerBufSecs*fps));
     	else
-    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width/2, (int)(p.ampPerBufSecs*fps));
+    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width, (int)(p.ampPerBufSecs*fps));
     		
     	key = new Key(p.keyBufSecs*fps);
     	bpm = new BPM(3*fps, p.bpmBufSize, fps);
