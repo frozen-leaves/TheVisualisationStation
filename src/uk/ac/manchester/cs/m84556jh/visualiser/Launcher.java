@@ -49,7 +49,6 @@ public class Launcher extends PApplet {
     		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, min(width,height), (int)(p.ampPerBufSecs*fps));
     	else
     		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width, (int)(p.ampPerBufSecs*fps));
-    		
     	key = new Key(p.keyBufSecs*fps);
     	bpm = new BPM(3*fps, p.bpmBufSize, fps);
 	    selectInput("Select a colour file to use:", "colsSelected");
@@ -86,7 +85,6 @@ public class Launcher extends PApplet {
 					 bpm.isBeat(),
 					 spectrum.getMaxFreq(),
 					 spectrum.getMaxOctave());
-			
 		}
 	}
 }
