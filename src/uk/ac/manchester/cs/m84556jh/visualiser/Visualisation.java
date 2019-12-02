@@ -6,6 +6,8 @@ import uk.ac.manchester.cs.m84556jh.colour.Col;
 
 public class Visualisation {
 	
+	private VertSize vs = new VertSize(5, 0.8);
+	
 	private PApplet app;
 	
 	public Visualisation(PApplet app) {
@@ -30,6 +32,7 @@ public class Visualisation {
 			app.background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
 			
 		Col lastCol = null;
+		double vertPerc = vs.calcVertPerc(isBeat);
 		//Display shape of colours from colour array
 		for(int i = 0; i < ampCol.length; i++) {
 			//Set colour to the colour in the array element
@@ -43,26 +46,28 @@ public class Visualisation {
 				}
 			}else if(type == "rect"){
 				if(lastCol == null || !(lastCol.equals(ampCol[i]))) {
-					app.rect((float)(app.width/2),(float)(app.height/2),(float)ampCol.length - i,(float)app.height);
+					app.rect((float)(app.width/2),(float)(app.height/2),(float)ampCol.length - i,(float)(app.height*vertPerc));
 					lastCol = ampCol[i];
 				}
 			}else {
 				if(lastCol == null || !(lastCol.equals(ampCol[i]))) {
-					app.circle((float)(app.width/2), (float)(app.height/2), (float)(ampCol.length - i));
+					app.ellipse((float)(app.width/2), (float)(app.height/2), (float)(ampCol.length - i), (float)((ampCol.length - i)*vertPerc));
 					lastCol = ampCol[i];
 				}  
 			}
 		}
 		
-		//Display a white circle on each beat
-		if(isBeat) {
-			if(type == "stats") {
-				app.fill(0, 100, 50);
-				app.circle((float)(app.width/2), (float)(app.height-50), (float)50.0);
-			} else {
-				app.fill(0, 0, 100);
-				app.circle((float)(app.width/2), (float)(app.height-200), (float)200.0);
-			}
-		}
+		//Retained for demonstration and testing only
+		
+//		//Display a white circle on each beat
+//		if(isBeat) {
+//			if(type == "stats") {
+//				app.fill(0, 100, 50);
+//				app.circle((float)(app.width/2), (float)(app.height-50), (float)50.0);
+//			} else {
+//				app.fill(0, 0, 100);
+//				app.circle((float)(app.width/2), (float)(app.height-200), (float)200.0);
+//			}
+//		}
 	}
 }
