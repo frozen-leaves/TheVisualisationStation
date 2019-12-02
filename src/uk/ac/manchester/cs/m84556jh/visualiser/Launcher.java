@@ -50,7 +50,7 @@ public class Launcher extends PApplet {
     	else
     		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width, (int)(p.ampPerBufSecs*fps));
     	key = new Key(p.keyBufSecs*fps);
-    	bpm = new BPM(3*fps, p.bpmBufSize, fps);
+    	bpm = new BPM(3*fps, p.bpmBufSize, fps, 32, 10);
 	    selectInput("Select a colour file to use:", "colsSelected");
     }
     
@@ -80,7 +80,7 @@ public class Launcher extends PApplet {
 			vis.draw(visType, 
 					 key.calc(spectrum.getMaxFreq().getIndex()), 
 					 key.getCol(noteCols), 
-					 bpm.calcBPM(spectrum.getBeatAmp()), 
+					 bpm.calcBPM(spectrum),
 					 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
 					 bpm.isBeat(),
 					 spectrum.getMaxFreq(),

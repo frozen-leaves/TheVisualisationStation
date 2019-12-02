@@ -26,6 +26,18 @@ public class Spectrum {
 		fft.analyze(spec);
 	}
 	
+	//Get a sub-band of the frequency spectum, based on the
+	//band required and the number of sub-bands to split into
+	public double getFSubBand(int band, int numSBands) {
+		int bandsPerSubBand = (int)Math.floor(bands/numSBands);
+		int low = band * bandsPerSubBand;
+		int high = (band + 1) * bandsPerSubBand;
+		double subBandSum = 0.0;
+		for(int b = low; b < high; b++)
+			subBandSum += spec[b];
+		return subBandSum;
+	}
+	
 	//Determine the total amplitude of the bands that represent the snare and
 	//kick drums, which are usually used to mark out the beat of a song
 	public double getBeatAmp(){

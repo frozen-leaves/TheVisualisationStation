@@ -5,38 +5,47 @@ import uk.ac.manchester.cs.m84556jh.buffer.CBInteger;
 
 public class BPM {
 	
-	//INITIALLY ONLY ADDS SINGLE SAMPLE TO EACH BAND
-	private CBDouble ampBuf;
+	private CBDouble[] ampBuf;
 	private CBInteger bpmBuf;
+	private int fSubBands;
+	private int isBeatNumBands;
 	private int frameRate;
 	private int framesPassed;
 	private boolean beat = false;
 	
-	public BPM(int ampBufSize, int bpmBufSize, int fps){
-		this.ampBuf = new CBDouble(ampBufSize);
+	
+	public BPM(int ampBufSize, int bpmBufSize, int fps, int fSubBands, int isBeatNumBands){
+		this.ampBuf = new CBDouble[fSubBands];
 		this.bpmBuf = new CBInteger(bpmBufSize);
+		this.fSubBands = fSubBands;
+		for(int i = 0; i < fSubBands; i++) {
+			this.ampBuf[i] = new CBDouble(ampBufSize);
+		}
+		this.isBeatNumBands = isBeatNumBands;
 		this.frameRate = fps;
 		this.framesPassed = 0;
 	}
 	
-	public double calcBPM(double amplitude){
+	public double calcBPM(Spectrum spectrum){
 		beat = false;
-		//Place amplitude in the buffer
-		ampBuf.add(amplitude);
-		//If there is a beat in last sample, add to buffer, then return BPM
-		if(amplitude >(-0.0000015 * ampBuf.var() + 1.51) * ampBuf.avg()) {
+		int numFBandsBeat = 0;
+		//Calculate amplitude for each frequency sub-band and add to array
+		for(int i = 0; i < fSubBands; i++) {
+			double sbAmp = spectrum.getFSubBand(i, fSubBands);
+			ampBuf[i].add(sbAmp);
+			if(sbAmp > ((-0.0027 * ampBuf[i].var() + 1.55) * ampBuf[i].avg()))
+				numFBandsBeat++;
+		}
+		
+		if(numFBandsBeat > isBeatNumBands) {
 			bpmBuf.add(framesPassed);
 			beat = true;
-		}	
-		//Get average difference between 2 vals and convert to BPM
-		framesPassed++;
+		}
 		return (60*frameRate)/bpmBuf.dif();
 	}
-			
+	
 	public boolean isBeat() {
 		return beat;
 	}
-	
-	
 
 }
