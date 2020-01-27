@@ -83,7 +83,8 @@ public class Launcher extends PApplet {
 						 key.calc(spectrum.getMaxFreq().getIndex()), 
 						 key.getCol(noteCols), 
 						 bpm.calcBPM(spectrum),
-						 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
+						 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), 
+						 spectrum.getTotAmp()), 
 						 bpm.isBeat(),
 						 spectrum.getMaxFreq(),
 						 spectrum.getMaxOctave());
