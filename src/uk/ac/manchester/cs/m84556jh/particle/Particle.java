@@ -6,15 +6,15 @@ public class Particle {
 	private int radius;
 	private double xPos, yPos;
 	private double xVel, yVel;
-	private int lt = 300;
+	private int lt = 500;
 	private Col colour;
 	
 	public Particle(int r, int initX, int initY, int emitAngleDeg, Col col, int velMag) {
 		radius = r;
 		xPos = initX;
 		yPos = initY;
-		xVel = velMag * Math.cos(Math.toRadians(emitAngleDeg));
-		yVel = velMag * Math.sin(Math.toRadians(emitAngleDeg));
+		xVel = velMag * Math.sin(Math.toRadians(emitAngleDeg));
+		yVel = velMag * Math.cos(Math.toRadians(emitAngleDeg));
 		colour = col;
 	}
 	

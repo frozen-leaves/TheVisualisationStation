@@ -8,7 +8,8 @@ import java.io.FileNotFoundException;
 import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
-import uk.ac.manchester.cs.m84556jh.particle.ParticleVisualisation;
+import uk.ac.manchester.cs.m84556jh.particle.BarsVisualisation;
+import uk.ac.manchester.cs.m84556jh.particle.SpiralVisualisation;
 
 public class Launcher extends PApplet {
 	
@@ -24,7 +25,8 @@ public class Launcher extends PApplet {
 	BPM bpm;
 	String visType;
 	Visualisation vis = new Visualisation(this);
-	ParticleVisualisation parVis = new ParticleVisualisation(this);
+	SpiralVisualisation spiralVis = new SpiralVisualisation(this);
+	BarsVisualisation barsVis = new BarsVisualisation(this);
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -78,7 +80,22 @@ public class Launcher extends PApplet {
 		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
-			if(visType != "particle") {
+			
+			if(visType == "spiral") {
+				key.calc(spectrum.getMaxFreq().getIndex());
+				bpm.calcBPM(spectrum);
+				spiralVis.draw(key.getCol(noteCols),
+						       spectrum.getMaxFreq().getCol(noteCols),
+						       amp.calcSize(spectrum.getTotAmp()),
+						       bpm.isBeat());
+			} else if(visType == "bars") {
+				key.calc(spectrum.getMaxFreq().getIndex());
+				bpm.calcBPM(spectrum);
+				barsVis.draw(key.getCol(noteCols),
+						     spectrum.getMaxFreq().getCol(noteCols),
+						     amp.calcSize(spectrum.getTotAmp()),
+						     bpm.isBeat());
+			} else {
 				vis.draw(visType, 
 						 key.calc(spectrum.getMaxFreq().getIndex()), 
 						 key.getCol(noteCols), 
@@ -88,14 +105,6 @@ public class Launcher extends PApplet {
 						 bpm.isBeat(),
 						 spectrum.getMaxFreq(),
 						 spectrum.getMaxOctave());
-			}
-			else {
-				key.calc(spectrum.getMaxFreq().getIndex());
-				bpm.calcBPM(spectrum);
-				parVis.draw(key.getCol(noteCols),
-						    spectrum.getMaxFreq().getCol(noteCols),
-						    amp.calcSize(spectrum.getTotAmp()),
-						    bpm.isBeat());
 			}
 			
 		}
