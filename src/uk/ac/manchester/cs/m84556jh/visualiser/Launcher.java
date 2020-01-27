@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.particle.ParticleVisualisation;
 
 public class Launcher extends PApplet {
 	
@@ -23,6 +24,7 @@ public class Launcher extends PApplet {
 	BPM bpm;
 	String visType;
 	Visualisation vis = new Visualisation(this);
+	ParticleVisualisation parVis = new ParticleVisualisation(this);
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -36,7 +38,7 @@ public class Launcher extends PApplet {
 	    background(255);
 	    PImage icon = loadImage("icon.png");
 	    surface.setIcon(icon);
-	    surface.setTitle("Visualiser");
+	    surface.setTitle("The Visualisation Station");
 	    //Set parameters from parameter dialog
 	    Parameters p = new Parameters();  
     	fps = p.fps;
@@ -76,15 +78,25 @@ public class Launcher extends PApplet {
 		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
+			if(visType != "particle") {
+				vis.draw(visType, 
+						 key.calc(spectrum.getMaxFreq().getIndex()), 
+						 key.getCol(noteCols), 
+						 bpm.calcBPM(spectrum),
+						 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
+						 bpm.isBeat(),
+						 spectrum.getMaxFreq(),
+						 spectrum.getMaxOctave());
+			}
+			else {
+				key.calc(spectrum.getMaxFreq().getIndex());
+				bpm.calcBPM(spectrum);
+				parVis.draw(key.getCol(noteCols),
+						    spectrum.getMaxFreq().getCol(noteCols),
+						    amp.calcSize(spectrum.getTotAmp()),
+						    bpm.isBeat());
+			}
 			
-			vis.draw(visType, 
-					 key.calc(spectrum.getMaxFreq().getIndex()), 
-					 key.getCol(noteCols), 
-					 bpm.calcBPM(spectrum),
-					 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-					 bpm.isBeat(),
-					 spectrum.getMaxFreq(),
-					 spectrum.getMaxOctave());
 		}
 	}
 }
