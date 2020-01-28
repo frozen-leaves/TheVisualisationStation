@@ -1,35 +1,31 @@
-package uk.ac.manchester.cs.m84556jh.particle;
-
-import java.util.ArrayList;
+package uk.ac.manchester.cs.m84556jh.visualisation;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
+import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.particle.Particle;
+import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
+import uk.ac.manchester.cs.m84556jh.visualiser.Key;
+import uk.ac.manchester.cs.m84556jh.visualiser.Note;
 import uk.ac.manchester.cs.m84556jh.visualiser.VertSize;
 
-public class BarsVisualisation {
+public class BarsVisualisation extends ParticleVisualisation{
 	
-	private VertSize vs = new VertSize(5, 0.8);
-	private ArrayList<Particle> particles = new ArrayList<Particle>();
-	private PApplet app;
-	private double sizeFactor;
-	private int velMag = 5;
-	
-	
-	public BarsVisualisation(PApplet app) {
-		this.app = app;
-		sizeFactor = app.height/20.0;
+	public BarsVisualisation(PApplet app, ColPal colPal) {
+		super(app, new VertSize(5,0.8), colPal, app.height/200.0, 5);
 	}
 	
-	public void draw(Col keyCol, Col noteCol, double ampPerc, boolean isBeat) {
+	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
 		
 		//Set background colour to key colour
+		Col keyCol = key.getCol(cp);
 		app.background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
 			
-		double vertPerc = vs.calcVertPerc(isBeat);
+		double vertPerc = vs.calcVertPerc(bpm.isBeat());
 		//Display whole particle system
 		//Start by adding latest particle to the ArrayList
-		particles.add(new Particle((int)(sizeFactor*ampPerc), 1, app.height/2, 90, noteCol, velMag));
+		particles.add(new Particle((int)(sizeFactor*ampPerc), 1, app.height/2, 90, note.getCol(cp), velMag));
 		
 		//Move each particle
 		//If the particle has no life left, or is outside of the screen area, remove it
@@ -40,11 +36,8 @@ public class BarsVisualisation {
 			curPar = particles.get(i);
 			curPar.move();
 			app.fill(curPar.getColour().getHue(), curPar.getColour().getSat(), curPar.getColour().getBri());
-			if(curPar.getLifetime() == 0) {
-				particles.remove(i);
-			}else if(curPar.getX() > app.width || curPar.getX() < 0) {
-				particles.remove(i);
-			}else if(curPar.getY() > app.height || curPar.getY() < 0) {
+			if(curPar.getLifetime() == 0 || curPar.getX() > app.width || curPar.getX() < 0 
+			   || curPar.getY() > app.height || curPar.getY() < 0) {
 				particles.remove(i);
 			}else {
 				app.rect((float)(curPar.getX()), (float)(curPar.getY()), (float)(velMag), (float)((double)curPar.getR()*vertPerc));

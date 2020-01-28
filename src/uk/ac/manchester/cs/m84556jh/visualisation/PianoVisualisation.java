@@ -37,13 +37,10 @@ public class PianoVisualisation extends ParticleVisualisation{
 			curPar = particles.get(i);
 			curPar.move();
 			app.fill(curPar.getColour().getHue(), curPar.getColour().getSat(), curPar.getColour().getBri());
-			if(curPar.getLifetime() == 0) {
+			if(curPar.getLifetime() == 0 || curPar.getX() > app.width || curPar.getX() < 0 
+			   || curPar.getY() > app.height || curPar.getY() < 0) {
 				particles.remove(i);
-			}else if(curPar.getX() > app.width || curPar.getX() < 0) {
-				particles.remove(i);
-			}else if(curPar.getY() > app.height || curPar.getY() < 0) {
-				particles.remove(i);
-			}else {
+			} else {
 				app.rect((float)(curPar.getX()), (float)(curPar.getY()), (float)(app.width/120.0), (float)((double)curPar.getR()*vertPerc));
 			}
 			
