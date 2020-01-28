@@ -1,6 +1,7 @@
 package uk.ac.manchester.cs.m84556jh.visualisation;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
@@ -8,9 +9,9 @@ import uk.ac.manchester.cs.m84556jh.visualiser.Key;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
 import uk.ac.manchester.cs.m84556jh.visualiser.VertSize;
 
-public class CircleVisualisation extends Visualisation{
+public class RectangleVisualisation extends Visualisation{
 
-	public CircleVisualisation(PApplet parentApp, ColPal colPal) {
+	public RectangleVisualisation(PApplet parentApp, ColPal colPal) {
 		super(parentApp, new VertSize(5, 0.8), colPal);
 	}
 
@@ -26,10 +27,11 @@ public class CircleVisualisation extends Visualisation{
 		for(int i = 0; i < ampCol.length; i++) {
 			//Set colour to the colour in the array element
 			app.fill(ampCol[i].getHue(), ampCol[i].getSat(), ampCol[i].getBri());
+			app.rectMode(PConstants.CENTER);
 			if(lastCol == null || !(lastCol.equals(ampCol[i]))) {
-				app.ellipse((float)(app.width/2), (float)(app.height/2), (float)(ampCol.length - i), (float)((ampCol.length - i)*vertPerc));
+				app.rect((float)(app.width/2),(float)(app.height/2),(float)ampCol.length - i,(float)(app.height*vertPerc));
 				lastCol = ampCol[i];
-			}  
+			} 
 		}
 
 	}
