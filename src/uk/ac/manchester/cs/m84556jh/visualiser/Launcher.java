@@ -39,38 +39,7 @@ public class Launcher extends PApplet {
 	    size(width, height);
     }
     
-    public void setup() {
-	    background(255);
-	    PImage icon = loadImage("icon.png");
-	    surface.setIcon(icon);
-	    surface.setTitle("The Visualisation Station");
-	    //Set parameters from parameter dialog
-	    Parameters p = new Parameters();  
-    	fps = p.fps;
-    	frameRate(fps);
-    	//Get user to choose visualisation type
-    	Style s = new Style();
-    	visType = s.style;
-    	//If drawing a circle, size of buffer must be min of width and height
-    	if(visType == "circle")
-    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, min(width,height), (int)(p.ampPerBufSecs*fps));
-    	else
-    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width, (int)(p.ampPerBufSecs*fps));
-    	key = new Key(p.keyBufSecs*fps);
-    	bpm = new BPM(3*fps, p.bpmBufSize, fps, 32, 10);
-	    selectInput("Select a colour file to use:", "colsSelected");
-    }
-    
-    public void mp3Selected(File mp3) {
-    	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
-    }
-    
-    public void colsSelected(File cols) {
-    	try {
-			noteCols = new ColPal(cols);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+    public void selectVis() {
     	switch(visType) {
     	case "spiral":
     		vis = new SpiralVisualisation(this, noteCols);
@@ -94,6 +63,51 @@ public class Launcher extends PApplet {
     		vis = new CircleVisualisation(this, noteCols);
     		break;
     	}
+    }
+    
+    public void setup() {
+	    background(255);
+	    PImage icon = loadImage("icon.png");
+	    surface.setIcon(icon);
+	    surface.setTitle("The Visualisation Station");
+	    //Set parameters from parameter dialog
+	    Parameters p = new Parameters();  
+    	fps = p.fps;
+    	frameRate(fps);
+    	//Get user to choose visualisation type
+    	Style s = new Style();
+    	visType = s.style;
+    	//If drawing a circle, size of buffer must be min of width and height
+    	if(visType == "circle")
+    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, min(width,height), (int)(p.ampPerBufSecs*fps));
+    	else
+    		amp = new Amplitude(p.ampBufSecs*fps, p.ampMinSize, width, (int)(p.ampPerBufSecs*fps));
+    	key = new Key(p.keyBufSecs*fps);
+    	bpm = new BPM(3*fps, p.bpmBufSize, fps, 32, 10);
+    	if(p.useDefaultColFile) {
+    		try {
+    			noteCols = new ColPal(new File("colours.txt"));
+    		} catch (FileNotFoundException e) {
+    			e.printStackTrace();
+    		}
+    		selectInput("Select an MP3 file to use:", "mp3Selected");
+    	}
+    		
+    	else
+    		selectInput("Select a colour file to use:", "colsSelected");
+    }
+    
+    public void mp3Selected(File mp3) {
+    	selectVis();
+    	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
+    }
+    
+    public void colsSelected(File cols) {
+    	try {
+			noteCols = new ColPal(cols);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
     	selectInput("Select an MP3 file to use:", "mp3Selected");
     }
 	

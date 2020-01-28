@@ -52,9 +52,9 @@ public class Style extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    //Check which button has been clicked
 	    if (event.getSource() == rectButton) {
+	    	style = "rect";
 	    	dispose();
-	    }//end if
-	    else if(event.getSource() == circleButton){
+	    } else if(event.getSource() == circleButton){
 	    	style = "circle";
 	    	dispose();
 	    } else if(event.getSource() == spiralButton){

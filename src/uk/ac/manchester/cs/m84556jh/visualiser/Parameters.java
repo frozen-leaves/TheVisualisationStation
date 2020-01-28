@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ public class Parameters extends JDialog implements ActionListener {
 	public int ampMinSize = 20;
 	public int bpmBufSize = 30;
 	public int keyBufSecs = 10;
+	public boolean useDefaultColFile = true;
 	
 	private final JTextField fpsTextField = new JTextField("30");
 	private final JTextField ampBufSecsTextField = new JTextField("10");
@@ -30,6 +32,7 @@ public class Parameters extends JDialog implements ActionListener {
 	private final JTextField ampMinSizeTextField = new JTextField("20");
 	private final JTextField bpmBufSizeTextField = new JTextField("30");
 	private final JTextField keyBufSecsTextField = new JTextField("10");
+	private final JCheckBox defaultColFile = new JCheckBox("Use Default Colour File?", true);
 	
 	private final JButton setButton = new JButton("Set Parameters");
 	private final JButton defaultButton = new JButton("Use Default Values");
@@ -64,6 +67,7 @@ public class Parameters extends JDialog implements ActionListener {
 	    contents.add(bpmBufSizeTextField);
 	    contents.add(keyBufSecsLabel);
 	    contents.add(keyBufSecsTextField);
+	    contents.add(defaultColFile);
 	    contents.add(setButton);
 	    contents.add(defaultButton);
 	    //Make this class the action listener for each of the buttons
@@ -78,6 +82,7 @@ public class Parameters extends JDialog implements ActionListener {
 	  
 	//Performs actions for buttons
 	public void actionPerformed(ActionEvent event) {
+		useDefaultColFile = defaultColFile.isSelected();
 	    //Check which button has been clicked
 	    if (event.getSource() == setButton) {
 	    	try {
