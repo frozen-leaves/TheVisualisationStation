@@ -9,6 +9,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.particle.BarsVisualisation;
+import uk.ac.manchester.cs.m84556jh.particle.PianoVisualisation;
 import uk.ac.manchester.cs.m84556jh.particle.SpiralVisualisation;
 
 public class Launcher extends PApplet {
@@ -27,6 +28,7 @@ public class Launcher extends PApplet {
 	Visualisation vis = new Visualisation(this);
 	SpiralVisualisation spiralVis = new SpiralVisualisation(this);
 	BarsVisualisation barsVis = new BarsVisualisation(this);
+	PianoVisualisation pianoVis = new PianoVisualisation(this);
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -95,6 +97,14 @@ public class Launcher extends PApplet {
 						     spectrum.getMaxFreq().getCol(noteCols),
 						     amp.calcSize(spectrum.getTotAmp()),
 						     bpm.isBeat());
+			} else if(visType == "piano") {
+				key.calc(spectrum.getMaxFreq().getIndex());
+				bpm.calcBPM(spectrum);
+				pianoVis.draw(key.getCol(noteCols),
+						     spectrum.getMaxFreq().getCol(noteCols),
+						     amp.calcSize(spectrum.getTotAmp()),
+						     bpm.isBeat(),
+						     spectrum.getMaxFreq());
 			} else {
 				vis.draw(visType, 
 						 key.calc(spectrum.getMaxFreq().getIndex()), 

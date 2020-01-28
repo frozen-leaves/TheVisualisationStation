@@ -21,6 +21,7 @@ public class Style extends JDialog implements ActionListener {
 	private final JButton statsButton = new JButton("Print Stats");
 	private final JButton spiralButton = new JButton("Spiral");
 	private final JButton barsButton = new JButton("Bars");
+	private final JButton pianoButton = new JButton("Piano");
 
 	public Style() {
 		setModalityType(DEFAULT_MODALITY_TYPE);
@@ -31,12 +32,14 @@ public class Style extends JDialog implements ActionListener {
 	    contents.add(circleButton);
 	    contents.add(spiralButton);
 	    contents.add(barsButton);
+	    contents.add(pianoButton);
 	    contents.add(statsButton);
 	    //Make this class the action listener for each of the buttons
 	    rectButton.addActionListener(this);
 	    circleButton.addActionListener(this);
 	    spiralButton.addActionListener(this);
 	    barsButton.addActionListener(this);
+	    pianoButton.addActionListener(this);
 	    statsButton.addActionListener(this);
 	    ImageIcon img = new ImageIcon("icon.png");
 	    setIconImage(img.getImage());
@@ -59,6 +62,9 @@ public class Style extends JDialog implements ActionListener {
 	    	dispose();
 	    } else if(event.getSource() == barsButton) {
 	    	style = "bars";
+	    	dispose();
+	    } else if(event.getSource() == pianoButton) {
+	    	style = "piano";
 	    	dispose();
 	    } else {
 	    	style = "stats";
