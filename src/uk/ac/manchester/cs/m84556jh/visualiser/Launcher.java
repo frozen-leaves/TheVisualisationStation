@@ -13,6 +13,7 @@ import uk.ac.manchester.cs.m84556jh.visualisation.CircleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.PianoVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.RectangleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.SpiralVisualisation;
+import uk.ac.manchester.cs.m84556jh.visualisation.StatsVisualisation;
 
 public class Launcher extends PApplet {
 	
@@ -33,6 +34,7 @@ public class Launcher extends PApplet {
 	PianoVisualisation pianoVis;
 	CircleVisualisation circleVis;
 	RectangleVisualisation rectVis;
+	StatsVisualisation statsVis;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -79,6 +81,7 @@ public class Launcher extends PApplet {
     	barsVis = new BarsVisualisation(this, noteCols);
     	circleVis = new CircleVisualisation(this, noteCols);
     	rectVis = new RectangleVisualisation(this, noteCols);
+    	statsVis = new StatsVisualisation(this, noteCols);
     	selectInput("Select an MP3 file to use:", "mp3Selected");
     }
 	
@@ -138,16 +141,15 @@ public class Launcher extends PApplet {
 					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
 					       amp.getSize(),
 					       spectrum.getMaxOctave());
-			} else {
-				vis.draw(visType, 
-						 key.calc(spectrum.getMaxFreq().getIndex()), 
-						 key.getCol(noteCols), 
-						 bpm.calcBPM(spectrum),
-						 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), 
-						 spectrum.getTotAmp()), 
-						 bpm.isBeat(),
-						 spectrum.getMaxFreq(),
-						 spectrum.getMaxOctave());
+			} else if(visType == "stats"){
+				key.calc(spectrum.getMaxFreq().getIndex());
+				bpm.calcBPM(spectrum);
+				statsVis.draw(spectrum.getMaxFreq(),
+					       key,
+					       bpm,
+					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
+					       amp.getSize(),
+					       spectrum.getMaxOctave());
 			}
 			
 		}
