@@ -12,6 +12,7 @@ public class BPM {
 	private int frameRate;
 	private int framesPassed;
 	private boolean beat = false;
+	private double bpm;
 	
 	
 	public BPM(int ampBufSize, int bpmBufSize, int fps, int fSubBands, int isBeatNumBands){
@@ -41,11 +42,16 @@ public class BPM {
 			bpmBuf.add(framesPassed);
 			beat = true;
 		}
-		return (60*frameRate)/bpmBuf.dif();
+		bpm = (60*frameRate)/bpmBuf.dif();
+		return bpm;
 	}
 	
 	public boolean isBeat() {
 		return beat;
+	}
+	
+	public double getBPM() {
+		return bpm;
 	}
 
 }

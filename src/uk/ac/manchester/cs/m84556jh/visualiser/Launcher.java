@@ -10,7 +10,7 @@ import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.particle.BarsVisualisation;
 import uk.ac.manchester.cs.m84556jh.particle.PianoVisualisation;
-import uk.ac.manchester.cs.m84556jh.particle.SpiralVisualisation;
+import uk.ac.manchester.cs.m84556jh.visualisation.SpiralVisualisation;
 
 public class Launcher extends PApplet {
 	
@@ -26,7 +26,7 @@ public class Launcher extends PApplet {
 	BPM bpm;
 	String visType;
 	Visualisation vis = new Visualisation(this);
-	SpiralVisualisation spiralVis = new SpiralVisualisation(this);
+	SpiralVisualisation spiralVis;
 	BarsVisualisation barsVis = new BarsVisualisation(this);
 	PianoVisualisation pianoVis = new PianoVisualisation(this);
 	
@@ -70,6 +70,7 @@ public class Launcher extends PApplet {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+    	spiralVis = new SpiralVisualisation(this, noteCols);
     	selectInput("Select an MP3 file to use:", "mp3Selected");
     }
 	
@@ -80,16 +81,19 @@ public class Launcher extends PApplet {
 		noStroke();
 		colorMode(HSB, 255, 100, 100);
 		
+		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
 			
 			if(visType == "spiral") {
 				key.calc(spectrum.getMaxFreq().getIndex());
 				bpm.calcBPM(spectrum);
-				spiralVis.draw(key.getCol(noteCols),
-						       spectrum.getMaxFreq().getCol(noteCols),
+				spiralVis.draw(spectrum.getMaxFreq(),
+						       key,
+						       bpm,
+						       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
 						       amp.calcSize(spectrum.getTotAmp()),
-						       bpm.isBeat());
+						       spectrum.getMaxOctave());
 			} else if(visType == "bars") {
 				key.calc(spectrum.getMaxFreq().getIndex());
 				bpm.calcBPM(spectrum);
