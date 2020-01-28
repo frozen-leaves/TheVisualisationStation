@@ -9,6 +9,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.visualisation.BarsVisualisation;
+import uk.ac.manchester.cs.m84556jh.visualisation.CircleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.PianoVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.SpiralVisualisation;
 
@@ -29,6 +30,7 @@ public class Launcher extends PApplet {
 	SpiralVisualisation spiralVis;
 	BarsVisualisation barsVis;
 	PianoVisualisation pianoVis;
+	CircleVisualisation circleVis;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -73,6 +75,7 @@ public class Launcher extends PApplet {
     	spiralVis = new SpiralVisualisation(this, noteCols);
     	pianoVis = new PianoVisualisation(this, noteCols);
     	barsVis = new BarsVisualisation(this, noteCols);
+    	circleVis = new CircleVisualisation(this, noteCols);
     	selectInput("Select an MP3 file to use:", "mp3Selected");
     }
 	
@@ -109,6 +112,15 @@ public class Launcher extends PApplet {
 				key.calc(spectrum.getMaxFreq().getIndex());
 				bpm.calcBPM(spectrum);
 				pianoVis.draw(spectrum.getMaxFreq(),
+					       key,
+					       bpm,
+					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
+					       amp.getSize(),
+					       spectrum.getMaxOctave());
+			} else if(visType == "circle") {
+				key.calc(spectrum.getMaxFreq().getIndex());
+				bpm.calcBPM(spectrum);
+				circleVis.draw(spectrum.getMaxFreq(),
 					       key,
 					       bpm,
 					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
