@@ -14,6 +14,7 @@ import uk.ac.manchester.cs.m84556jh.visualisation.PianoVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.RectangleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.SpiralVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.StatsVisualisation;
+import uk.ac.manchester.cs.m84556jh.visualisation.Visualisation;
 
 public class Launcher extends PApplet {
 	
@@ -28,13 +29,7 @@ public class Launcher extends PApplet {
 	Key key;
 	BPM bpm;
 	String visType;
-	Visualisation vis = new Visualisation(this);
-	SpiralVisualisation spiralVis;
-	BarsVisualisation barsVis;
-	PianoVisualisation pianoVis;
-	CircleVisualisation circleVis;
-	RectangleVisualisation rectVis;
-	StatsVisualisation statsVis;
+	Visualisation vis;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -76,12 +71,29 @@ public class Launcher extends PApplet {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-    	spiralVis = new SpiralVisualisation(this, noteCols);
-    	pianoVis = new PianoVisualisation(this, noteCols);
-    	barsVis = new BarsVisualisation(this, noteCols);
-    	circleVis = new CircleVisualisation(this, noteCols);
-    	rectVis = new RectangleVisualisation(this, noteCols);
-    	statsVis = new StatsVisualisation(this, noteCols);
+    	switch(visType) {
+    	case "spiral":
+    		vis = new SpiralVisualisation(this, noteCols);
+    		break;
+    	case "piano":
+    		vis = new PianoVisualisation(this, noteCols);
+    		break;
+    	case "bars":
+    		vis = new BarsVisualisation(this, noteCols);
+    		break;
+    	case "circle":
+    		vis = new CircleVisualisation(this, noteCols);
+    		break;
+    	case "rect":
+    		vis = new RectangleVisualisation(this, noteCols);
+    		break;
+    	case "stats":
+    		vis = new StatsVisualisation(this, noteCols);
+    		break;
+    	default:
+    		vis = new CircleVisualisation(this, noteCols);
+    		break;
+    	}
     	selectInput("Select an MP3 file to use:", "mp3Selected");
     }
 	
@@ -92,66 +104,16 @@ public class Launcher extends PApplet {
 		noStroke();
 		colorMode(HSB, 255, 100, 100);
 		
-		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
-			
-			if(visType == "spiral") {
-				key.calc(spectrum.getMaxFreq().getIndex());
-				bpm.calcBPM(spectrum);
-				spiralVis.draw(spectrum.getMaxFreq(),
-						       key,
-						       bpm,
-						       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-						       amp.getSize(),
-						       spectrum.getMaxOctave());
-			} else if(visType == "bars") {
-				key.calc(spectrum.getMaxFreq().getIndex());
-				bpm.calcBPM(spectrum);
-				barsVis.draw(spectrum.getMaxFreq(),
-					       key,
-					       bpm,
-					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-					       amp.getSize(),
-					       spectrum.getMaxOctave());
-			} else if(visType == "piano") {
-				key.calc(spectrum.getMaxFreq().getIndex());
-				bpm.calcBPM(spectrum);
-				pianoVis.draw(spectrum.getMaxFreq(),
-					       key,
-					       bpm,
-					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-					       amp.getSize(),
-					       spectrum.getMaxOctave());
-			} else if(visType == "circle") {
-				key.calc(spectrum.getMaxFreq().getIndex());
-				bpm.calcBPM(spectrum);
-				circleVis.draw(spectrum.getMaxFreq(),
-					       key,
-					       bpm,
-					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-					       amp.getSize(),
-					       spectrum.getMaxOctave());
-			} else if(visType == "rect") {
-				key.calc(spectrum.getMaxFreq().getIndex());
-				bpm.calcBPM(spectrum);
-				rectVis.draw(spectrum.getMaxFreq(),
-					       key,
-					       bpm,
-					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-					       amp.getSize(),
-					       spectrum.getMaxOctave());
-			} else if(visType == "stats"){
-				key.calc(spectrum.getMaxFreq().getIndex());
-				bpm.calcBPM(spectrum);
-				statsVis.draw(spectrum.getMaxFreq(),
-					       key,
-					       bpm,
-					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-					       amp.getSize(),
-					       spectrum.getMaxOctave());
-			}
-			
+			key.calc(spectrum.getMaxFreq().getIndex());
+			bpm.calcBPM(spectrum);
+			vis.draw(spectrum.getMaxFreq(),
+				     key,
+					 bpm,
+					 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
+					 amp.getSize(),
+					 spectrum.getMaxOctave());
 		}
 	}
 }
