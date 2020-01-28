@@ -43,6 +43,7 @@ public class BPM {
 			beat = true;
 		}
 		bpm = (60*frameRate)/bpmBuf.dif();
+		framesPassed++;
 		return bpm;
 	}
 	
