@@ -9,7 +9,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.particle.BarsVisualisation;
-import uk.ac.manchester.cs.m84556jh.particle.PianoVisualisation;
+import uk.ac.manchester.cs.m84556jh.visualisation.PianoVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.SpiralVisualisation;
 
 public class Launcher extends PApplet {
@@ -28,7 +28,7 @@ public class Launcher extends PApplet {
 	Visualisation vis = new Visualisation(this);
 	SpiralVisualisation spiralVis;
 	BarsVisualisation barsVis = new BarsVisualisation(this);
-	PianoVisualisation pianoVis = new PianoVisualisation(this);
+	PianoVisualisation pianoVis;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -71,6 +71,7 @@ public class Launcher extends PApplet {
 			e.printStackTrace();
 		}
     	spiralVis = new SpiralVisualisation(this, noteCols);
+    	pianoVis = new PianoVisualisation(this, noteCols);
     	selectInput("Select an MP3 file to use:", "mp3Selected");
     }
 	
@@ -92,23 +93,25 @@ public class Launcher extends PApplet {
 						       key,
 						       bpm,
 						       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
-						       amp.calcSize(spectrum.getTotAmp()),
+						       amp.getSize(),
 						       spectrum.getMaxOctave());
 			} else if(visType == "bars") {
 				key.calc(spectrum.getMaxFreq().getIndex());
 				bpm.calcBPM(spectrum);
+				amp.calcSize(spectrum.getTotAmp());
 				barsVis.draw(key.getCol(noteCols),
 						     spectrum.getMaxFreq().getCol(noteCols),
-						     amp.calcSize(spectrum.getTotAmp()),
+						     amp.getSize(),
 						     bpm.isBeat());
 			} else if(visType == "piano") {
 				key.calc(spectrum.getMaxFreq().getIndex());
 				bpm.calcBPM(spectrum);
-				pianoVis.draw(key.getCol(noteCols),
-						     spectrum.getMaxFreq().getCol(noteCols),
-						     amp.calcSize(spectrum.getTotAmp()),
-						     bpm.isBeat(),
-						     spectrum.getMaxFreq());
+				pianoVis.draw(spectrum.getMaxFreq(),
+					       key,
+					       bpm,
+					       amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
+					       amp.getSize(),
+					       spectrum.getMaxOctave());
 			} else {
 				vis.draw(visType, 
 						 key.calc(spectrum.getMaxFreq().getIndex()), 

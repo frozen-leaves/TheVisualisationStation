@@ -1,36 +1,32 @@
-package uk.ac.manchester.cs.m84556jh.particle;
-
-import java.util.ArrayList;
+package uk.ac.manchester.cs.m84556jh.visualisation;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
+import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.particle.Particle;
+import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
+import uk.ac.manchester.cs.m84556jh.visualiser.Key;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
 import uk.ac.manchester.cs.m84556jh.visualiser.VertSize;
 
-public class PianoVisualisation {
+public class PianoVisualisation extends ParticleVisualisation{
 	
-	private VertSize vs = new VertSize(5, 0.8);
-	private ArrayList<Particle> particles = new ArrayList<Particle>();
-	private PApplet app;
-	private double sizeFactor;
-	private int velMag = 5;
-	
-	public PianoVisualisation(PApplet app) {
-		this.app = app;
-		sizeFactor = app.height/40.0;
+	public PianoVisualisation(PApplet app, ColPal colPal) {
+		super(app, new VertSize(5, 0.8), colPal, app.height/200.0, 5);
 	}
 	
-	public void draw(Col keyCol, Col noteCol, double ampPerc, boolean isBeat, Note maxNote) {
+	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
 		
 		//Set background colour to key colour
+		Col keyCol = key.getCol(cp);
 		app.background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
 			
-		double vertPerc = vs.calcVertPerc(isBeat);
+		double vertPerc = vs.calcVertPerc(bpm.isBeat());
 		//Display whole particle system
 		//Start by adding latest particle to the ArrayList
-		double barWidthPos = (((maxNote.getOctave()*12)+maxNote.getIndex())*app.width)/120.0 + app.width/240.0;
-		particles.add(new Particle((int)(sizeFactor*ampPerc), (int)barWidthPos, app.height-1, 180, noteCol, velMag));
+		double barWidthPos = (((note.getOctave()*12)+note.getIndex())*app.width)/120.0 + app.width/240.0;
+		particles.add(new Particle((int)(sizeFactor*ampPerc), (int)barWidthPos, app.height-1, 180, note.getCol(cp), velMag));
 		
 		//Move each particle
 		//If the particle has no life left, or is outside of the screen area, remove it

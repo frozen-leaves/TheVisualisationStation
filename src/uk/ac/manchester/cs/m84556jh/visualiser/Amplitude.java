@@ -12,6 +12,7 @@ public class Amplitude {
 	private int minSize;
 	private int prevSize;
 	private int curSize;
+	private double size = 0.0;
 	
 	public Amplitude(int ampBufSize, int minSize, int pixelBufSize, int ampPercBufSize) {
 		this.ampBuf = new CBDouble(ampBufSize);
@@ -22,7 +23,7 @@ public class Amplitude {
 		this.pixelBuf = new CBCol(pixelBufSize);
 	}
 	
-	public double calcSize(double curAmp) {
+	public void calcSize(double curAmp) {
 		//Add current amp to the buffer
 		ampBuf.add(curAmp);
 		//Get min and max amps in buffer
@@ -33,7 +34,7 @@ public class Amplitude {
 		if(minAmp == maxAmp)
 			ampPercBuf.add((double)(minSize + ((100-minSize)/2)));
 		ampPercBuf.add(minSize + (((curAmp - minAmp)/(maxAmp - minAmp))*(100 - minSize))); 
-		return ampPercBuf.avg();
+		size = ampPercBuf.avg();
 	}
 	
 	//Take the current colour and amplitude and return the new pixel buffer
@@ -42,7 +43,8 @@ public class Amplitude {
 		//Keep track of the previous size
 		prevSize = curSize;
 		//Get the current size of the amplitude, convert to number of pixels
-		curSize = (int)(calcSize(curAmp)/100*pixelBuf.getBufSize());
+		calcSize(curAmp);
+		curSize = (int)(size/100*pixelBuf.getBufSize());
 		//If bigger than previous size, top up pixel buffer with pixels 
 		//of new colour equal to difference
 		//Otherwise, add 5 pixels of current colour
@@ -60,6 +62,10 @@ public class Amplitude {
 			array[i] = pixelBuf.read();
 		}
 		return array;
+	}
+	
+	public double getSize() {
+		return size;
 	}
 
 }
