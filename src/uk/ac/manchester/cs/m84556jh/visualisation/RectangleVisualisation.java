@@ -18,8 +18,7 @@ public class RectangleVisualisation extends Visualisation{
 	@Override
 	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
 		//Set background colour to the key colour
-		Col keyCol = key.getCol(cp);
-		app.background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
+		drawKeyBackground(key.getCol(cp));
 			
 		Col lastCol = null;
 		double vertPerc = vs.calcVertPerc(bpm.isBeat());

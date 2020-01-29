@@ -20,10 +20,7 @@ public class RandomParticleVisualisation extends ParticleVisualisation{
 		super(app, new VertSize(5, 0.8), colPal, 0.4, 3);
 	}
 	
-	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
-		//Set background colour to key colour
-		Col keyCol = key.getCol(cp);
-		app.background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
+	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {		
 			
 		double vertPerc = vs.calcVertPerc(bpm.isBeat());
 		//Display whole particle system
@@ -47,6 +44,8 @@ public class RandomParticleVisualisation extends ParticleVisualisation{
 			
 		}
 		
+		//Draw border on the frame the same colour as the key
+		drawKeyBorder(key.getCol(cp), 60);
 	}
 }
 

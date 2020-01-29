@@ -19,8 +19,7 @@ public class BarsVisualisation extends ParticleVisualisation{
 	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
 		
 		//Set background colour to key colour
-		Col keyCol = key.getCol(cp);
-		app.background(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());
+		drawKeyBackground(key.getCol(cp));
 			
 		double vertPerc = vs.calcVertPerc(bpm.isBeat());
 		//Display whole particle system
