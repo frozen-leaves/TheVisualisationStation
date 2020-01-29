@@ -11,6 +11,7 @@ import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.visualisation.BarsVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.CircleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.PianoVisualisation;
+import uk.ac.manchester.cs.m84556jh.visualisation.RandomParticleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.RectangleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.SpiralVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.StatsVisualisation;
@@ -49,6 +50,9 @@ public class Launcher extends PApplet {
     		break;
     	case "bars":
     		vis = new BarsVisualisation(this, noteCols);
+    		break;
+    	case "ranPar":
+    		vis = new RandomParticleVisualisation(this, noteCols);
     		break;
     	case "circle":
     		vis = new CircleVisualisation(this, noteCols);

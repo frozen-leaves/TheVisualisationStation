@@ -22,6 +22,7 @@ public class Style extends JDialog implements ActionListener {
 	private final JButton spiralButton = new JButton("Spiral");
 	private final JButton barsButton = new JButton("Bars");
 	private final JButton pianoButton = new JButton("Piano");
+	private final JButton ranParButton = new JButton("Random Particles");
 
 	public Style() {
 		setModalityType(DEFAULT_MODALITY_TYPE);
@@ -33,6 +34,7 @@ public class Style extends JDialog implements ActionListener {
 	    contents.add(spiralButton);
 	    contents.add(barsButton);
 	    contents.add(pianoButton);
+	    contents.add(ranParButton);
 	    contents.add(statsButton);
 	    //Make this class the action listener for each of the buttons
 	    rectButton.addActionListener(this);
@@ -40,6 +42,7 @@ public class Style extends JDialog implements ActionListener {
 	    spiralButton.addActionListener(this);
 	    barsButton.addActionListener(this);
 	    pianoButton.addActionListener(this);
+	    ranParButton.addActionListener(this);
 	    statsButton.addActionListener(this);
 	    ImageIcon img = new ImageIcon("icon.png");
 	    setIconImage(img.getImage());
@@ -65,6 +68,9 @@ public class Style extends JDialog implements ActionListener {
 	    	dispose();
 	    } else if(event.getSource() == pianoButton) {
 	    	style = "piano";
+	    	dispose();
+	    } else if(event.getSource() == ranParButton) {
+	    	style = "ranPar";
 	    	dispose();
 	    } else {
 	    	style = "stats";
