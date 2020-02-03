@@ -10,17 +10,20 @@ import uk.ac.manchester.cs.m84556jh.colour.Col;
 
 public class AmplitudeTest {
 	
-	Amplitude amp = new Amplitude(5,20,20,1);
+	Amplitude amp = new Amplitude(5,20,20,3);
 
 	@Test
 	public void testCalcSize() {
-		assertTrue(((Double)amp.calcSize(10)).equals(60.0));
-		assertTrue(((Double)amp.calcSize(20)).equals(100.0));
-		assertTrue(((Double)amp.calcSize(15)).equals(60.0));
-		assertTrue(((Double)amp.calcSize(30)).equals(100.0));
-		assertTrue(((Double)amp.calcSize(24)).equals(76.0));
-		assertTrue(((Double)amp.calcSize(55)).equals(100.0));
-		assertTrue(((Double)amp.calcSize(24)).equals(38.0));
+		amp.calcSize(10);
+		System.out.println(amp.getSize());
+		assertTrue(((Double)amp.getSize()).equals(60.0));
+		amp.calcSize(20);
+		assertTrue(((Double)amp.getSize()).equals(80.0));
+		amp.calcSize(15);
+		assertTrue(((Double)amp.getSize()).equals(220/3.0));
+		amp.calcSize(30);
+		System.out.println(amp.getSize());
+		assertTrue(((Double)amp.getSize()).equals(260/3.0));
 	}
 
 	@Test

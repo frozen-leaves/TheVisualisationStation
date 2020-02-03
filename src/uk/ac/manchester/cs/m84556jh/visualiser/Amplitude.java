@@ -32,8 +32,9 @@ public class Amplitude {
 		//Calculate the size of colour on the screen, between minSize percent and 100 percent,
 		//based on the percentage difference between the min and max values that the current value is
 		if(minAmp == maxAmp)
-			ampPercBuf.add((double)(minSize + ((100-minSize)/2)));
-		ampPercBuf.add(minSize + (((curAmp - minAmp)/(maxAmp - minAmp))*(100 - minSize))); 
+			ampPercBuf.add((double)(50 + minSize/2.0));
+		else
+			ampPercBuf.add(minSize + (((curAmp - minAmp)/(maxAmp - minAmp))*(100 - minSize))); 
 		size = ampPercBuf.avg();
 	}
 	
