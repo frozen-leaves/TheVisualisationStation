@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,10 +31,7 @@ public class Parameters extends JDialog implements ActionListener {
 	private final JTextField ampMinSizeTextField = new JTextField("20");
 	private final JTextField bpmBufSizeTextField = new JTextField("30");
 	private final JTextField keyBufSecsTextField = new JTextField("10");
-	private final JCheckBox defaultColFile = new JCheckBox("Use Default Colour File?", true);
-	
 	private final JButton setButton = new JButton("Set Parameters");
-	private final JButton defaultButton = new JButton("Use Default Values");
 	  
 
 	public Parameters() {
@@ -67,12 +63,9 @@ public class Parameters extends JDialog implements ActionListener {
 	    contents.add(bpmBufSizeTextField);
 	    contents.add(keyBufSecsLabel);
 	    contents.add(keyBufSecsTextField);
-	    contents.add(defaultColFile);
 	    contents.add(setButton);
-	    contents.add(defaultButton);
 	    //Make this class the action listener for each of the buttons
 	    setButton.addActionListener(this);
-	    defaultButton.addActionListener(this);
 	    ImageIcon img = new ImageIcon("icon.png");
 	    setIconImage(img.getImage());
 	    setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -82,25 +75,18 @@ public class Parameters extends JDialog implements ActionListener {
 	  
 	//Performs actions for buttons
 	public void actionPerformed(ActionEvent event) {
-		useDefaultColFile = defaultColFile.isSelected();
-	    //Check which button has been clicked
-	    if (event.getSource() == setButton) {
-	    	try {
-	    		fps = Integer.parseInt(fpsTextField.getText());
-		    	ampBufSecs = Integer.parseInt(ampBufSecsTextField.getText());
-		    	ampPerBufSecs = Double.parseDouble(ampPerBufSecsTextField.getText());
-		    	ampMinSize = Integer.parseInt(ampMinSizeTextField.getText());
-		    	bpmBufSize = Integer.parseInt(bpmBufSizeTextField.getText());
-		    	keyBufSecs = Integer.parseInt(keyBufSecsTextField.getText());
-		    	dispose();
-	    	} catch(NumberFormatException e){
-	    		JOptionPane.showMessageDialog(null, "Please ensure all the values entered are numbers in the range required", "Error", JOptionPane.ERROR_MESSAGE); 
-	    	}
-	    	
-	    }//end if
-	    else {
+    	try {
+    		fps = Integer.parseInt(fpsTextField.getText());
+	    	ampBufSecs = Integer.parseInt(ampBufSecsTextField.getText());
+	    	ampPerBufSecs = Double.parseDouble(ampPerBufSecsTextField.getText());
+	    	ampMinSize = Integer.parseInt(ampMinSizeTextField.getText());
+	    	bpmBufSize = Integer.parseInt(bpmBufSizeTextField.getText());
+	    	keyBufSecs = Integer.parseInt(keyBufSecsTextField.getText());
 	    	dispose();
-	    }
+    	} catch(NumberFormatException e){
+    		JOptionPane.showMessageDialog(null, "Please ensure all the values entered are numbers in the range required", "Error", JOptionPane.ERROR_MESSAGE); 
+    	}
+
 	    pack();
 	}
 }
