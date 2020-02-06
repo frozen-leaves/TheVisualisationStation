@@ -1,5 +1,7 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.sound.FFT;
 import processing.sound.SoundFile;
@@ -97,6 +99,31 @@ public class Spectrum {
 			curTotalAmp += spec[i];
 		}
 		return curTotalAmp;
+	}
+	
+	//Determine the notes with the highest amplitude in the FFT 
+	//Initially find the amplitude of the maximum note and then
+	//get notes where the amplitude is above a given percentage of
+	//this amplitude
+	public Note[] getMaxFreqs(int minPerc) {
+		
+		//Get amplitude of the biggest element in the spectrum
+		double curMaxAmp = 0;
+		for (int i = 0; i < spec.length; i++)
+			if(spec[i] > curMaxAmp)
+				curMaxAmp = spec[i];
+		
+		//Calculate minimum threshold for note
+		double minNoteAmp = minPerc/100.0 * curMaxAmp;
+		//Add each frequency above the threshold to an ArrayList
+		ArrayList<Note> maxNotes = new ArrayList<Note>();
+		for (int i = 0; i < spec.length; i++)
+			if(spec[i] > minNoteAmp)
+				maxNotes.add(new Note((double)samFreq/2/spec.length*i, spec[i]));
+		
+		Note[] notes = new Note[maxNotes.size()];
+		notes = maxNotes.toArray(notes);
+		return notes;
 	}
 	
 }
