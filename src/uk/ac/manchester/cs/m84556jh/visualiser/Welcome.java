@@ -117,19 +117,19 @@ public class Welcome extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 	    //Check which button has been clicked
 	    if (event.getSource() == rectButton) {
-	    	style = "rect";
+	    	style = "Rectangle";
 	    } else if(event.getSource() == circleButton){
-	    	style = "circle";
+	    	style = "Circle";
 	    } else if(event.getSource() == spiralButton){
-	    	style = "spiral";
+	    	style = "Spiral";
 	    } else if(event.getSource() == barsButton) {
-	    	style = "bars";
+	    	style = "Bars";
 	    } else if(event.getSource() == pianoButton) {
-	    	style = "piano";
+	    	style = "Piano";
 	    } else if(event.getSource() == ranParButton) {
-	    	style = "ranPar";
+	    	style = "RandomParticle";
 	    } else if(event.getSource() == statsButton){
-	    	style = "stats";
+	    	style = "Stats";
 	    } else if(event.getSource() == selectColFileButton) {
 	    	useDefaultColFile = false;
 	    	app.selectInput("Select a colour file to use:", "populateNoteCols");

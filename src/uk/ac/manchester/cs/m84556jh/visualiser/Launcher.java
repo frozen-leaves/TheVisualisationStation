@@ -10,13 +10,6 @@ import javax.swing.UIManager;
 import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
-import uk.ac.manchester.cs.m84556jh.visualisation.BarsVisualisation;
-import uk.ac.manchester.cs.m84556jh.visualisation.CircleVisualisation;
-import uk.ac.manchester.cs.m84556jh.visualisation.PianoVisualisation;
-import uk.ac.manchester.cs.m84556jh.visualisation.RandomParticleVisualisation;
-import uk.ac.manchester.cs.m84556jh.visualisation.RectangleVisualisation;
-import uk.ac.manchester.cs.m84556jh.visualisation.SpiralVisualisation;
-import uk.ac.manchester.cs.m84556jh.visualisation.StatsVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.Visualisation;
 
 public class Launcher extends PApplet {
@@ -40,35 +33,6 @@ public class Launcher extends PApplet {
   
     public void settings() {
     	fullScreen();
-    }
-    
-    public void selectVis() {
-    	switch(visType) {
-    	case "spiral":
-    		vis = new SpiralVisualisation(this, noteCols);
-    		break;
-    	case "piano":
-    		vis = new PianoVisualisation(this, noteCols);
-    		break;
-    	case "bars":
-    		vis = new BarsVisualisation(this, noteCols);
-    		break;
-    	case "ranPar":
-    		vis = new RandomParticleVisualisation(this, noteCols);
-    		break;
-    	case "circle":
-    		vis = new CircleVisualisation(this, noteCols);
-    		break;
-    	case "rect":
-    		vis = new RectangleVisualisation(this, noteCols);
-    		break;
-    	case "stats":
-    		vis = new StatsVisualisation(this, noteCols);
-    		break;
-    	default:
-    		vis = new CircleVisualisation(this, noteCols);
-    		break;
-    	}
     }
     
     public void setup() {
@@ -102,7 +66,12 @@ public class Launcher extends PApplet {
     }
     
     public void mp3Selected(File mp3) {
-    	selectVis();
+    	String className = "uk.ac.manchester.cs.m84556jh.visualisation." + visType + "Visualisation";
+    	try {
+			vis = (Visualisation)Class.forName(className).getDeclaredConstructor(new Class[] {PApplet.class, ColPal.class}).newInstance(this, noteCols);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
     }
     
