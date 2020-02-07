@@ -5,6 +5,8 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import javax.swing.UIManager;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
@@ -37,7 +39,7 @@ public class Launcher extends PApplet {
     }
   
     public void settings() {
-	    size(width, height);
+    	fullScreen();
     }
     
     public void selectVis() {
@@ -71,6 +73,12 @@ public class Launcher extends PApplet {
     
     public void setup() {
 	    background(255);
+        try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	    PImage icon = loadImage("icon.png");
 	    surface.setIcon(icon);
 	    surface.setTitle("The Visualisation Station");
