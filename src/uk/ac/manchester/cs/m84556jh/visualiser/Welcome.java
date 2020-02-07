@@ -1,12 +1,13 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
 import java.awt.Container;
-import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,14 +45,18 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
 	private final JButton selectMP3Button = new JButton("4. Select MP3");
+	private TitleImage tImg = new TitleImage("VSTitle.png");
 
 	public Welcome(PApplet app) {
 		this.app = app;
 		setModalityType(DEFAULT_MODALITY_TYPE);
-	    setTitle("Visualisation Style");
+	    setTitle("The Visualisation Station - Welcome");
+	    
 	    Container contents = getContentPane();
-	    contents.setLayout(new GridLayout(0,1));
-	    //contents.add(new JLabel(new ImageIcon("VSTitle.png")));
+	    contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
+	    setResizable(false);
+	    tImg.setPreferredSize(new Dimension((int)(0.5*app.width), (int)(0.25*app.width)));
+	    contents.add(tImg);
 	    ButtonGroup bg = new ButtonGroup();
 	    contents.add(selStyle);
 	    contents.add(rectButton);
@@ -88,6 +93,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    setDefaultCloseOperation(HIDE_ON_CLOSE);
 	    pack();
 	    setVisible(true);
+	    
 	}
 	
 	public void colsSelected(File cols) {
