@@ -1,6 +1,7 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import processing.core.PApplet;
 import processing.sound.FFT;
@@ -123,6 +124,27 @@ public class Spectrum {
 		
 		Note[] notes = new Note[maxNotes.size()];
 		notes = maxNotes.toArray(notes);
+		return notes;
+	}
+	
+	//Determine the notes with the highest amplitude in the FFT
+	//Return the top n notes in the FFT
+	public Note[] getNMaxFreqs(int n) {
+		Note[] notes = new Note[n+1];
+		//Populate array with notes of zero amplitude
+		for(int k = 0; k < n+1; k++)
+			notes[k] = new Note(0,0);
+		//Insert highest notes up until this point into the array
+		for(int i = 0; i < spec.length; i++) {
+			int noteIndex = n - 1;
+			while(noteIndex > -1 && spec[i] > notes[noteIndex].getAmp()) {
+				notes[noteIndex + 1] = notes[noteIndex];
+				noteIndex--;
+			}
+			notes[noteIndex + 1] = new Note((double)samFreq/2/spec.length*i, spec[i]);
+		}
+		//Cut off last element of the array - only used for shifting values
+		notes = Arrays.copyOfRange(notes, 0, n);
 		return notes;
 	}
 	
