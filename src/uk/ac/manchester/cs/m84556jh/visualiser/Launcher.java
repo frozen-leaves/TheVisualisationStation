@@ -1,6 +1,5 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
-import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,11 +13,9 @@ import uk.ac.manchester.cs.m84556jh.visualisation.Visualisation;
 
 public class Launcher extends PApplet {
 	
-	// Global Variables 
 	int fps;
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int width = (int)screenSize.getWidth();
-	int height = (int)screenSize.getHeight();
+	int width = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	int height = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	ColPal noteCols;
 	Spectrum spectrum;
 	Amplitude amp;
@@ -42,17 +39,17 @@ public class Launcher extends PApplet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	    PImage icon = loadImage("icon.png");
 	    surface.setIcon(icon);
 	    surface.setTitle("The Visualisation Station");
-	    //Set parameters from parameter dialog
+	    
+	    //Set parameters from Welcome dialog
 	    Welcome w = new Welcome(this);
 	    visType = w.style;
     	fps = w.fps;
     	frameRate(fps);
     	
-    	//If drawing a circle, size of buffer must be min of width and height
+    	//If drawing a circle, size of buffer must be minimum of width and height
     	if(visType == "circle")
     		amp = new Amplitude(w.ampBufSecs*fps, w.ampMinSize, min(width,height), (int)(w.ampPerBufSecs*fps));
     	else
@@ -92,12 +89,13 @@ public class Launcher extends PApplet {
 		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
-			key.calc(spectrum.getMaxFreq().getIndex());
+			Note maxNote = spectrum.getMaxFreq();
+			key.calc(maxNote.getIndex());
 			bpm.calcBPM(spectrum);
-			vis.draw(spectrum.getMaxFreq(),
+			vis.draw(maxNote,
 				     key,
 					 bpm,
-					 amp.getPixelBuf(spectrum.getMaxFreq().getCol(noteCols), spectrum.getTotAmp()), 
+					 amp.getPixelBuf(maxNote.getCol(noteCols), spectrum.getTotAmp()), 
 					 amp.getSize(),
 					 spectrum.getMaxOctave());
 		}
