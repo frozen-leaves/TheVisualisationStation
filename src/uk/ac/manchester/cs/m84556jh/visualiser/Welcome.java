@@ -45,6 +45,7 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
 	private final JButton selectMP3Button = new JButton("4. Select MP3");
+	private final JButton exitButton = new JButton("Exit");
 	private TitleImage tImg = new TitleImage("VSTitle.png");
 
 	public Welcome(PApplet app) {
@@ -77,6 +78,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    contents.add(selectColFileButton);
 	    contents.add(selectParamButton);
 	    contents.add(selectMP3Button);
+	    contents.add(exitButton);
 	    //Make this class the action listener for each of the buttons
 	    rectButton.addActionListener(this);
 	    circleButton.addActionListener(this);
@@ -88,9 +90,16 @@ public class Welcome extends JDialog implements ActionListener {
 	    selectColFileButton.addActionListener(this);
 	    selectParamButton.addActionListener(this);
 	    selectMP3Button.addActionListener(this);
+	    exitButton.addActionListener(this);
 	    ImageIcon img = new ImageIcon("icon.png");
 	    setIconImage(img.getImage());
-	    setDefaultCloseOperation(HIDE_ON_CLOSE);
+	    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+	    addWindowListener(new java.awt.event.WindowAdapter() {
+	        @Override
+	        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+	        	System.exit(0);
+	        }
+	    });
 	    pack();
 	    setVisible(true);
 	    
@@ -132,8 +141,10 @@ public class Welcome extends JDialog implements ActionListener {
 	    	ampMinSize = p.ampMinSize;
 	    	bpmBufSize = p.bpmBufSize;
 	    	keyBufSecs = p.keyBufSecs;
-	    } else {
+	    } else if(event.getSource() == selectMP3Button){
 	    	dispose();
+	    } else {
+	    	System.exit(0);
 	    }
 	    
 	    pack();
