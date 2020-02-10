@@ -92,10 +92,11 @@ public class Launcher extends PApplet {
 			Note maxNote = spectrum.getMaxFreq();
 			key.calc(maxNote.getIndex());
 			bpm.calcBPM(spectrum);
+			amp.calcPixelBuf(maxNote.getCol(noteCols), spectrum.getTotAmp());
 			vis.draw(maxNote,
 				     key,
 					 bpm,
-					 amp.getPixelBuf(maxNote.getCol(noteCols), spectrum.getTotAmp()), 
+					 amp.getPixelBufArray(), 
 					 amp.getSize(),
 					 spectrum.getMaxOctave());
 		}

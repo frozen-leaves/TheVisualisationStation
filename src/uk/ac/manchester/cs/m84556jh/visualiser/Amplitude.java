@@ -9,6 +9,7 @@ public class Amplitude {
 	private CBDouble ampBuf;
 	private CBDouble ampPercBuf;
 	private CBCol pixelBuf;
+	private Col[] pixelBufArray;
 	private int minSize;
 	private int prevSize;
 	private int curSize;
@@ -40,7 +41,7 @@ public class Amplitude {
 	
 	//Take the current colour and amplitude and return the new pixel buffer
 	//with the correct number of elements for the current amplitude
-	public Col[] getPixelBuf(Col curCol, double curAmp) {
+	public void calcPixelBuf(Col curCol, double curAmp) {
 		//Keep track of the previous size
 		prevSize = curSize;
 		//Get the current size of the amplitude, convert to number of pixels
@@ -57,16 +58,19 @@ public class Amplitude {
 				pixelBuf.add(curCol);
 		}
 		//Produce array from pixel buffer of size required
-		Col[] array = new Col[curSize];
+		pixelBufArray = new Col[curSize];
 		pixelBuf.setReadPoint();
 		for(int i = 0; i < curSize; i++) {
-			array[i] = pixelBuf.read();
+			pixelBufArray[i] = pixelBuf.read();
 		}
-		return array;
 	}
 	
 	public double getSize() {
 		return size;
+	}
+	
+	public Col[] getPixelBufArray() {
+		return pixelBufArray;
 	}
 
 }
