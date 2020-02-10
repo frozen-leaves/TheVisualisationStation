@@ -50,7 +50,7 @@ public class Launcher extends PApplet {
     	frameRate(fps);
     	
     	//If drawing a circle, size of buffer must be minimum of width and height
-    	if(visType == "circle")
+    	if(visType == "Circle")
     		amp = new Amplitude(w.ampBufSecs*fps, w.ampMinSize, min(width,height), (int)(w.ampPerBufSecs*fps));
     	else
     		amp = new Amplitude(w.ampBufSecs*fps, w.ampMinSize, width, (int)(w.ampPerBufSecs*fps));

@@ -23,7 +23,7 @@ public class Welcome extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	//DEFAULT VALUES FOR PARAMETERS
-	public String style = "rect";
+	public String style = "Rectangle";
 	public int fps = 30;
 	public int ampBufSecs = 10;
 	public double ampPerBufSecs = 0.35;
