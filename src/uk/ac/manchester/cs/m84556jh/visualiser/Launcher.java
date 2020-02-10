@@ -35,9 +35,18 @@ public class Launcher extends PApplet {
     public void setup() {
 	    background(255);
         try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        	UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			} catch (Exception f) {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Exception g) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
 	    PImage icon = loadImage("icon.png");
 	    surface.setIcon(icon);
