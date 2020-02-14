@@ -44,6 +44,7 @@ public class Spectrum {
 	
 	//Determine the total amplitude of the bands that represent the snare and
 	//kick drums, which are usually used to mark out the beat of a song
+	@Deprecated
 	public double getBeatAmp(){
 		double hzPerBand = 22050/(double)spec.length;
 		int lowKickBand = (int)Math.floor(60/hzPerBand);
