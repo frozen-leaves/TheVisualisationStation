@@ -102,7 +102,7 @@ public class Launcher extends PApplet {
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
 			//Get max notes in spectrum using appropriate method
-			Note[] maxNotes = spectrum.getNMaxFreqs(5);
+			Note[] maxNotes = spectrum.getMaxFreqs(90);
 			
 			key.calc(maxNotes);
 			bpm.calcBPM(spectrum);

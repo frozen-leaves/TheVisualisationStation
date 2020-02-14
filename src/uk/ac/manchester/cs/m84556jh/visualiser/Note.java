@@ -3,7 +3,7 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 
-public class Note {
+public class Note implements Comparable<Note> {
 	public static final String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 	private double freq;
 	private double amplitude;
@@ -56,6 +56,17 @@ public class Note {
 	//Returns the note and its octave in its alphanumeric form
 	public String toString() {
 		return notes[this.index]+this.octave;
+	}
+
+	@Override
+	public int compareTo(Note arg0) {
+		if(arg0.amplitude == this.amplitude) {
+			return 0;
+		}else if(arg0.amplitude < this.amplitude) {
+			return 1;
+		}else {
+			return -1;
+		}
 	}
   
 }

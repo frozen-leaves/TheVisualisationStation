@@ -2,6 +2,7 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import processing.core.PApplet;
 import processing.sound.FFT;
@@ -135,6 +136,7 @@ public class Spectrum {
 		}
 		Note[] notes = new Note[maxNotes.size()];
 		notes = maxNotes.toArray(notes);
+		Arrays.sort(notes, Collections.reverseOrder());
 		return notes;
 	}
 	
