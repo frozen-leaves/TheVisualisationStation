@@ -42,9 +42,10 @@ public abstract class ParticleVisualisation extends Visualisation{
 			
 		//Display whole particle system
 		//Start by adding latest particle to the ArrayList
-		for(Note n: notes) {
-			addParticle(n, amp.calcSize(n.getAmp()));
+		for(int n=0; n < notes.length; n++ ) {
+			addParticle(notes[n], amp.calcSize(notes[n].getAmp())/(n+1));
 		}
+		
 		//Move each particle
 		//If the particle has no life left, or is outside of the screen area, remove it
 		//Otherwise draw the particle on the screen
