@@ -21,7 +21,7 @@ public abstract class Visualisation {
 		this.cp = colPal;
 	}
 	
-	public abstract void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct);
+	public abstract void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct);
 	
 	public void drawKeyBorder(Col keyCol, int width) {
 		app.fill(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());

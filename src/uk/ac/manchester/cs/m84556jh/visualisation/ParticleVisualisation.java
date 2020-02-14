@@ -31,7 +31,7 @@ public abstract class ParticleVisualisation extends Visualisation{
 	
 	public abstract void afterParticles(Col keyCol);
 	
-	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
+	public void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
 		
 		//Do before drawing particles, may be drawing key
 		beforeParticles(key.getCol(cp));
@@ -40,8 +40,9 @@ public abstract class ParticleVisualisation extends Visualisation{
 			
 		//Display whole particle system
 		//Start by adding latest particle to the ArrayList
-		addParticle(note, bpm, ampCol, ampPerc);
-		
+		for(Note n: notes) {
+			addParticle(n, bpm, ampCol, ampPerc);
+		}
 		//Move each particle
 		//If the particle has no life left, or is outside of the screen area, remove it
 		//Otherwise draw the particle on the screen

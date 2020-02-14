@@ -26,9 +26,9 @@ public class StatsVisualisation extends Visualisation{
     }
 
 	@Override
-	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
+	public void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
 		//Print stats to the screen
-		printStats(note, key.toString(), bpm.getBPM(), oct);
+		printStats(notes[0], key.toString(), bpm.getBPM(), oct);
 			
 		Col lastCol = null;
 		//Display shape of colours from colour array

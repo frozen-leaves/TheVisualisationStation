@@ -98,11 +98,13 @@ public class Launcher extends PApplet {
 		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
-			Note maxNote = spectrum.getMaxFreq();
-			key.calc(maxNote.getIndex());
+			//Get max notes in spectrum using appropriate method
+			Note[] maxNotes = spectrum.getMaxFreqs(90);
+			
+			key.calc(maxNotes);
 			bpm.calcBPM(spectrum);
-			amp.calcPixelBuf(maxNote.getCol(noteCols), spectrum.getTotAmp());
-			vis.draw(maxNote,
+			amp.calcPixelBuf(maxNotes[0].getCol(noteCols), spectrum.getTotAmp());
+			vis.draw(maxNotes,
 				     key,
 					 bpm,
 					 amp.getPixelBufArray(), 

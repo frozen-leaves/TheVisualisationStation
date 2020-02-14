@@ -16,7 +16,7 @@ public class RectangleVisualisation extends Visualisation{
 	}
 
 	@Override
-	public void draw(Note note, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
+	public void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
 		//Set background colour to the key colour
 		drawKeyBackground(key.getCol(cp));
 			

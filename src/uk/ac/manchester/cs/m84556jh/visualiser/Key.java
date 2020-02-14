@@ -9,29 +9,31 @@ import uk.ac.manchester.cs.m84556jh.colour.Col;
 public class Key {
 	private int[] times = {0,0,0,0,0,0,0,0,0,0,0,0};
 	private CBInteger timesCB;
-	private int framesPassed;
+	private int notesAdded;
 	private int index;
 	
 	public Key(int bufSize) {
 		this.timesCB = new CBInteger(bufSize);
-		this.framesPassed = 0;
+		this.notesAdded = 0;
 		this.index = 0;
 	}
 	
-	//Add note in the latest sample to the notes present
+	//Add notes in the latest sample to the notes present
 	//Based on the notes present in the noteTimes array, determine which
 	//key they closest map to, i.e. look at the notes in each key and 
 	//determine which set of these notes has the most instances
-	public String calc(int noteIndex) {
-		//Remove the note that is first in the circular buffer
+	public String calc(Note[] notes) {
+		//Remove the first n notes from the circular buffer based on Notes size
 		timesCB.setReadPoint();
-		if(framesPassed >= timesCB.getBufSize())
-			times[timesCB.read()]--;
-		//Put new note in circular buffer
-		timesCB.add(noteIndex);
-		//Increment maxNote in noteTime array
-		times[noteIndex]++;
-		framesPassed++;
+		for(Note note: notes) {
+			if(notesAdded >= timesCB.getBufSize())
+				times[timesCB.read()]--;
+			//Put new note in circular buffer
+			timesCB.add(note.getIndex());
+			//Increment maxNote in noteTime array
+			times[note.getIndex()]++;
+			notesAdded++;
+		}
 		int curMaxVal = 0;
 		index = 0;
 		//For each key, find the total number of samples of the notes in that key
