@@ -85,6 +85,7 @@ public class Launcher extends PApplet {
 			e.printStackTrace();
 		}
     	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
+    	noCursor();
     }
     
     public void populateNoteCols(File cols) {
