@@ -30,11 +30,14 @@ public class Welcome extends JDialog implements ActionListener {
 	public int ampMinSize = 20;
 	public int bpmBufSize = 30;
 	public int keyBufSecs = 10;
+	public int numPType = 0;
+	public int percMaxP = 90;
+	public int numMaxP = 5;
 	public boolean useDefaultColFile = true;
 	public ColPal noteCols;
 	private PApplet app;
 	
-	private final JLabel selStyle = new JLabel("1. Select Visualisation Style");
+	private final JLabel selStyle = new JLabel("1. Select Visualisation Style:");
 	private final JRadioButton rectButton = new JRadioButton("Rectangular");
 	private final JRadioButton circleButton = new JRadioButton("Circular");
 	private final JRadioButton statsButton = new JRadioButton("Print Stats");
@@ -44,7 +47,8 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JRadioButton ranParButton = new JRadioButton("Random Particles");
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
-	private final JButton selectMP3Button = new JButton("4. Select MP3");
+	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles (Experimental!)");
+	private final JButton selectMP3Button = new JButton("5. Select MP3");
 	private final JButton exitButton = new JButton("Exit");
 	private TitleImage tImg = new TitleImage("VSTitle.png");
 
@@ -77,6 +81,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    bg.add(statsButton);
 	    contents.add(selectColFileButton);
 	    contents.add(selectParamButton);
+	    contents.add(selectNumParticlesButton);
 	    contents.add(selectMP3Button);
 	    contents.add(exitButton);
 	    //Make this class the action listener for each of the buttons
@@ -89,6 +94,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    statsButton.addActionListener(this);
 	    selectColFileButton.addActionListener(this);
 	    selectParamButton.addActionListener(this);
+	    selectNumParticlesButton.addActionListener(this);
 	    selectMP3Button.addActionListener(this);
 	    exitButton.addActionListener(this);
 	    ImageIcon img = new ImageIcon("icon.png");
@@ -141,6 +147,11 @@ public class Welcome extends JDialog implements ActionListener {
 	    	ampMinSize = p.ampMinSize;
 	    	bpmBufSize = p.bpmBufSize;
 	    	keyBufSecs = p.keyBufSecs;
+	    } else if(event.getSource() == selectNumParticlesButton) {
+	    	NumParticles n = new NumParticles();
+	    	numPType = n.numPType;
+	    	percMaxP = n.percMaxP;
+	    	numMaxP = n.numMaxP;
 	    } else if(event.getSource() == selectMP3Button){
 	    	dispose();
 	    } else {

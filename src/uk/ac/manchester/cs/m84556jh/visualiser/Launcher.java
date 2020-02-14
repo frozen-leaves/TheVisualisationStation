@@ -10,6 +10,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.visualisation.ParticleVisualisation;
 import uk.ac.manchester.cs.m84556jh.visualisation.Visualisation;
 import uk.ac.manchester.cs.m84556jh.visualiser.gui.Welcome;
 
@@ -26,6 +27,7 @@ public class Launcher extends PApplet {
 	String visType;
 	Visualisation vis;
 	CBCol pixelBuffer;
+	Welcome w;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -56,7 +58,7 @@ public class Launcher extends PApplet {
 	    surface.setTitle("The Visualisation Station");
 	    
 	    //Set parameters from Welcome dialog
-	    Welcome w = new Welcome(this);
+	    w = new Welcome(this);
 	    visType = w.style;
     	fps = w.fps;
     	frameRate(fps);
@@ -102,8 +104,24 @@ public class Launcher extends PApplet {
 		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
-			//Get max notes in spectrum using appropriate method
-			Note[] maxNotes = spectrum.getMaxFreqs(90);
+			//Get max notes in spectrum determined by user preference
+			//If not a ParticleVisualisation, only get one note
+			Note[] maxNotes = new Note[0];
+			if(vis instanceof ParticleVisualisation) {
+				switch(w.numPType) {
+				case 0:
+					maxNotes = spectrum.getMaxFreq();
+					break;
+				case 1:
+					maxNotes = spectrum.getNMaxFreqs(w.numMaxP);
+					break;
+				case 2:
+					maxNotes = spectrum.getMaxFreqs(w.percMaxP);
+					break;
+				}
+			} else {
+				maxNotes = spectrum.getMaxFreq();
+			}
 			
 			key.calc(maxNotes);
 			bpm.calcBPM(spectrum);
