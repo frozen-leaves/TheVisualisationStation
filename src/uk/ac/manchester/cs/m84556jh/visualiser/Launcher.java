@@ -11,6 +11,7 @@ import processing.core.PImage;
 import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.visualisation.Visualisation;
+import uk.ac.manchester.cs.m84556jh.visualiser.gui.Welcome;
 
 public class Launcher extends PApplet {
 	

@@ -1,4 +1,4 @@
-package uk.ac.manchester.cs.m84556jh.visualiser;
+package uk.ac.manchester.cs.m84556jh.visualiser.gui;
 
 import java.awt.Container;
 import java.awt.Dimension;
