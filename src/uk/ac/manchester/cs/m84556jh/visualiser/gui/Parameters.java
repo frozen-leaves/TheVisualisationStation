@@ -70,6 +70,7 @@ public class Parameters extends JDialog implements ActionListener {
 	    setIconImage(img.getImage());
 	    setDefaultCloseOperation(HIDE_ON_CLOSE);
 	    pack();
+	    setLocationRelativeTo(null);
 	    setVisible(true);
 	}
 	  

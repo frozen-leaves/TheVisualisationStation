@@ -47,7 +47,7 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JRadioButton ranParButton = new JRadioButton("Random Particles");
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
-	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles (Experimental!)");
+	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles Per Frame (Experimental!)");
 	private final JButton selectMP3Button = new JButton("5. Select MP3");
 	private final JButton exitButton = new JButton("Exit");
 	private TitleImage tImg = new TitleImage("VSTitle.png");
@@ -107,8 +107,8 @@ public class Welcome extends JDialog implements ActionListener {
 	        }
 	    });
 	    pack();
+	    setLocationRelativeTo(null);
 	    setVisible(true);
-	    
 	}
 	
 	public void colsSelected(File cols) {

@@ -36,7 +36,7 @@ public class NumParticles extends JDialog implements ActionListener {
 
 	public NumParticles() {
 		setModalityType(DEFAULT_MODALITY_TYPE);
-	    setTitle("The Visualisation Station - Set Number of Particles");
+	    setTitle("Set Number of Particles Per Frame");
 	    
 	    Container contents = getContentPane();
 	    contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
@@ -66,8 +66,8 @@ public class NumParticles extends JDialog implements ActionListener {
 	    setIconImage(img.getImage());
 	    setDefaultCloseOperation(HIDE_ON_CLOSE);
 	    pack();
+	    setLocationRelativeTo(null);
 	    setVisible(true);
-	    
 	}
 	  
 	//Performs actions for buttons
