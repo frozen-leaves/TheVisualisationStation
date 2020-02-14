@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.visualisation.Visualisation;
 
@@ -23,6 +24,7 @@ public class Launcher extends PApplet {
 	BPM bpm;
 	String visType;
 	Visualisation vis;
+	CBCol pixelBuffer;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -60,9 +62,10 @@ public class Launcher extends PApplet {
     	
     	//If drawing a circle, size of buffer must be minimum of width and height
     	if(visType == "Circle")
-    		amp = new Amplitude(w.ampBufSecs*fps, w.ampMinSize, min(width,height), (int)(w.ampPerBufSecs*fps));
+    		pixelBuffer = new CBCol(min(width,height));
     	else
-    		amp = new Amplitude(w.ampBufSecs*fps, w.ampMinSize, width, (int)(w.ampPerBufSecs*fps));
+    		pixelBuffer = new CBCol(width);
+    	amp = new Amplitude(w.ampBufSecs*fps, w.ampMinSize, (int)(w.ampPerBufSecs*fps));
     	key = new Key(w.keyBufSecs*fps);
     	bpm = new BPM(3*fps, w.bpmBufSize, fps, 32, 10);
     	if(w.useDefaultColFile)
@@ -99,17 +102,17 @@ public class Launcher extends PApplet {
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
 			//Get max notes in spectrum using appropriate method
-			Note[] maxNotes = spectrum.getMaxFreqs(90);
+			Note[] maxNotes = spectrum.getNMaxFreqs(5);
 			
 			key.calc(maxNotes);
 			bpm.calcBPM(spectrum);
-			amp.calcPixelBuf(maxNotes[0].getCol(noteCols), spectrum.getTotAmp());
 			vis.draw(maxNotes,
 				     key,
 					 bpm,
-					 amp.getPixelBufArray(), 
-					 amp.getSize(),
-					 spectrum.getMaxOctave());
+					 spectrum.getTotAmp(),
+					 amp,
+					 spectrum.getMaxOctave(),
+					 pixelBuffer);
 		}
 	}
 }

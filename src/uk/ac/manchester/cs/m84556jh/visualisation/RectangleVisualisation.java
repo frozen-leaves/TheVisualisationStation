@@ -2,8 +2,10 @@ package uk.ac.manchester.cs.m84556jh.visualisation;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
 import uk.ac.manchester.cs.m84556jh.visualiser.Key;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
@@ -16,10 +18,11 @@ public class RectangleVisualisation extends Visualisation{
 	}
 
 	@Override
-	public void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
+	public void draw(Note[] notes, Key key, BPM bpm, double totAmp, Amplitude amp, int oct, CBCol pixelBuffer) {
 		//Set background colour to the key colour
 		drawKeyBackground(key.getCol(cp));
-			
+		//Add total amplitude to pixelBuffer and get pixel buffer array
+		Col[] ampCol = pixelBuffer.calcPixelBuf(notes[0].getCol(cp), amp.calcSize(totAmp));
 		Col lastCol = null;
 		double vertPerc = vs.calcVertPerc(bpm.isBeat());
 		//Display shape of colours from colour array

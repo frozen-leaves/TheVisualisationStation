@@ -3,9 +3,11 @@ package uk.ac.manchester.cs.m84556jh.visualisation;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.particle.Particle;
+import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
 import uk.ac.manchester.cs.m84556jh.visualiser.Key;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
@@ -25,13 +27,13 @@ public abstract class ParticleVisualisation extends Visualisation{
 	
 	public abstract void beforeParticles(Col keyCol);
 	
-	public abstract void addParticle(Note note, BPM bpm, Col[] ampCol, double ampPerc);
+	public abstract void addParticle(Note note, double ampSize);
 	
 	public abstract void drawParticle(Particle p, double vertPerc);
 	
 	public abstract void afterParticles(Col keyCol);
 	
-	public void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
+	public void draw(Note[] notes, Key key, BPM bpm, double totAmp, Amplitude amp, int oct, CBCol pixelBuffer) {
 		
 		//Do before drawing particles, may be drawing key
 		beforeParticles(key.getCol(cp));
@@ -41,7 +43,7 @@ public abstract class ParticleVisualisation extends Visualisation{
 		//Display whole particle system
 		//Start by adding latest particle to the ArrayList
 		for(Note n: notes) {
-			addParticle(n, bpm, ampCol, ampPerc);
+			addParticle(n, amp.calcSize(n.getAmp()));
 		}
 		//Move each particle
 		//If the particle has no life left, or is outside of the screen area, remove it

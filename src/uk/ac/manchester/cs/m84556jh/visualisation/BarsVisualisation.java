@@ -5,7 +5,6 @@ import processing.core.PConstants;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.particle.Particle;
-import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
 import uk.ac.manchester.cs.m84556jh.visualiser.VertSize;
 
@@ -21,8 +20,8 @@ public class BarsVisualisation extends ParticleVisualisation{
 	}
 
 	@Override
-	public void addParticle(Note note, BPM bpm, Col[] ampCol, double ampPerc) {
-		particles.add(new Particle((int)(sizeFactor*ampPerc), 1, app.height/2, 90, note.getCol(cp), velMag));
+	public void addParticle(Note note, double ampSize) {
+		particles.add(new Particle((int)(sizeFactor*ampSize), 1, app.height/2, 90, note.getCol(cp), velMag));
 	}
 
 	@Override

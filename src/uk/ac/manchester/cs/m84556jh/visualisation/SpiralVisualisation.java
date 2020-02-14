@@ -4,7 +4,6 @@ import processing.core.PApplet;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.particle.Particle;
-import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
 import uk.ac.manchester.cs.m84556jh.visualiser.VertSize;
 
@@ -23,11 +22,8 @@ public class SpiralVisualisation extends ParticleVisualisation{
 	}
 
 	@Override
-	public void addParticle(Note note, BPM bpm, Col[] ampCol, double ampPerc) {
-		particles.add(new Particle((int)(sizeFactor*ampPerc), app.width/2, app.height/2, emitAngle, note.getCol(cp), velMag));
-		//Update the degree to emit the particle
-		emitAngle = (emitAngle + emitAngleInc)%360;	
-		
+	public void addParticle(Note note, double ampSize) {
+		particles.add(new Particle((int)(sizeFactor*ampSize), app.width/2, app.height/2, emitAngle, note.getCol(cp), velMag));
 	}
 
 	@Override
@@ -38,7 +34,8 @@ public class SpiralVisualisation extends ParticleVisualisation{
 
 	@Override
 	public void afterParticles(Col keyCol) {
-		//DO NOTHING
+		//Update the degree to emit the particle
+		emitAngle = (emitAngle + emitAngleInc)%360;	
 	}
 }
 

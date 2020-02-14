@@ -2,8 +2,10 @@ package uk.ac.manchester.cs.m84556jh.visualisation;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
 import uk.ac.manchester.cs.m84556jh.visualiser.Key;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
@@ -21,7 +23,7 @@ public abstract class Visualisation {
 		this.cp = colPal;
 	}
 	
-	public abstract void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct);
+	public abstract void draw(Note[] notes, Key key, BPM bpm, double totAmp, Amplitude amp, int oct, CBCol pixelBuffer);
 	
 	public void drawKeyBorder(Col keyCol, int width) {
 		app.fill(keyCol.getHue(), keyCol.getSat(), keyCol.getBri());

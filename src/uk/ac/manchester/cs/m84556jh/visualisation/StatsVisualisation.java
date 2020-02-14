@@ -2,8 +2,10 @@ package uk.ac.manchester.cs.m84556jh.visualisation;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import uk.ac.manchester.cs.m84556jh.buffer.CBCol;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.visualiser.Amplitude;
 import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
 import uk.ac.manchester.cs.m84556jh.visualiser.Key;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
@@ -26,10 +28,11 @@ public class StatsVisualisation extends Visualisation{
     }
 
 	@Override
-	public void draw(Note[] notes, Key key, BPM bpm, Col[] ampCol, double ampPerc, int oct) {
+	public void draw(Note[] notes, Key key, BPM bpm, double totAmp, Amplitude amp, int oct, CBCol pixelBuffer) {
 		//Print stats to the screen
 		printStats(notes[0], key.toString(), bpm.getBPM(), oct);
-			
+		//Add total amplitude to pixelBuffer and get pixel buffer array
+		Col[] ampCol = pixelBuffer.calcPixelBuf(notes[0].getCol(cp), amp.calcSize(totAmp));
 		Col lastCol = null;
 		//Display shape of colours from colour array
 		for(int i = 0; i < ampCol.length; i++) {

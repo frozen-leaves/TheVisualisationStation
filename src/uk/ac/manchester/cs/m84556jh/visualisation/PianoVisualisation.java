@@ -5,7 +5,6 @@ import processing.core.PConstants;
 import uk.ac.manchester.cs.m84556jh.colour.Col;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
 import uk.ac.manchester.cs.m84556jh.particle.Particle;
-import uk.ac.manchester.cs.m84556jh.visualiser.BPM;
 import uk.ac.manchester.cs.m84556jh.visualiser.Note;
 import uk.ac.manchester.cs.m84556jh.visualiser.VertSize;
 
@@ -22,9 +21,9 @@ public class PianoVisualisation extends ParticleVisualisation{
 	}
 
 	@Override
-	public void addParticle(Note note, BPM bpm, Col[] ampCol, double ampPerc) {
+	public void addParticle(Note note, double ampSize) {
 		double barWidthPos = (((note.getOctave()*12)+note.getIndex())*app.width)/120.0 + app.width/240.0;
-		particles.add(new Particle((int)(sizeFactor*ampPerc), (int)barWidthPos, app.height-1, 180, note.getCol(cp), velMag));
+		particles.add(new Particle((int)(sizeFactor*ampSize), (int)barWidthPos, app.height-1, 180, note.getCol(cp), velMag));
 	}
 
 	@Override
