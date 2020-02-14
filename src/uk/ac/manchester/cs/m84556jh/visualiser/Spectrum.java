@@ -113,25 +113,20 @@ public class Spectrum {
 		
 		//Get amplitude of the biggest element in the spectrum
 		double curMaxAmp = 0;
-		int curMaxIndex = 0;
 		for (int i = 0; i < spec.length; i++)
-			if(spec[i] > curMaxAmp) {
+			if(spec[i] > curMaxAmp)
 				curMaxAmp = spec[i];
-				curMaxIndex = i;
-			}
 				
 		
 		//Calculate minimum threshold for note
 		double minNoteAmp = minPerc/100.0 * curMaxAmp;
 		//Add each frequency above the threshold to an ArrayList
 		ArrayList<Note> maxNotes = new ArrayList<Note>();
-		//Ensure first element in arraylist is max, for supporting single note
-		maxNotes.add(new Note((double)samFreq/2/spec.length*curMaxIndex, curMaxAmp));
 		if(minNoteAmp == 0.0) {
 			maxNotes.add(new Note(0,0));
 		}else {
 			for (int i = 0; i < spec.length; i++)
-				if(spec[i] >= minNoteAmp && i != curMaxIndex)
+				if(spec[i] >= minNoteAmp)
 					maxNotes.add(new Note((double)samFreq/2/spec.length*i, spec[i]));
 		}
 		Note[] notes = new Note[maxNotes.size()];
