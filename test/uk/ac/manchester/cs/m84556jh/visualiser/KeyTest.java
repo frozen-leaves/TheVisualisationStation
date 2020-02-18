@@ -22,20 +22,20 @@ public class KeyTest {
 	@Before
 	public void setup() {
 		//Add 2 of each note found in D major scale (14 in total)
-		nt.calc(2);
-		nt.calc(2);
-		nt.calc(4);
-		nt.calc(4);
-		nt.calc(6);
-		nt.calc(6);
-		nt.calc(7);
-		nt.calc(7);
-		nt.calc(9);
-		nt.calc(9);
-		nt.calc(11);
-		nt.calc(11);
-		nt.calc(1);
-		nt.calc(1);
+		nt.calc(new Note[] {new Note(18.35, 0)});
+		nt.calc(new Note[] {new Note(18.35, 0)});
+		nt.calc(new Note[] {new Note(20.60, 0)});
+		nt.calc(new Note[] {new Note(20.60, 0)});
+		nt.calc(new Note[] {new Note(23.12, 0)});
+		nt.calc(new Note[] {new Note(23.12, 0)});
+		nt.calc(new Note[] {new Note(24.50, 0)});
+		nt.calc(new Note[] {new Note(24.50, 0)});
+		nt.calc(new Note[] {new Note(27.50, 0)});
+		nt.calc(new Note[] {new Note(27.50, 0)});
+		nt.calc(new Note[] {new Note(30.87, 0)});
+		nt.calc(new Note[] {new Note(30.87, 0)});
+		nt.calc(new Note[] {new Note(34.65, 0)});
+		nt.calc(new Note[] {new Note(34.65, 0)});
 		try {
 			colP = new ColPal(new File("colours.txt"));
 		} catch (FileNotFoundException e) {
@@ -48,7 +48,7 @@ public class KeyTest {
 	public void testAddNote() {
 		//Add a lot of C notes (a note not found in the D major scale)
 		for(int i = 0; i < 30; i++) {
-			nt.calc(0);
+			nt.calc(new Note[] {new Note(16.35, 0)});
 		}
 		//Check that key is now not D
 		assertFalse(nt.toString().equals("D"));
