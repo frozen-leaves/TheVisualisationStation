@@ -45,6 +45,7 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JRadioButton barsButton = new JRadioButton("Bars");
 	private final JRadioButton pianoButton = new JRadioButton("Piano");
 	private final JRadioButton ranParButton = new JRadioButton("Random Particles");
+	private final JRadioButton rainParButton = new JRadioButton("Raining Particles");
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
 	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles Per Frame (Experimental!)");
@@ -77,6 +78,8 @@ public class Welcome extends JDialog implements ActionListener {
 	    bg.add(pianoButton);
 	    contents.add(ranParButton);
 	    bg.add(ranParButton);
+	    contents.add(rainParButton);
+	    bg.add(rainParButton);
 	    contents.add(statsButton);
 	    bg.add(statsButton);
 	    contents.add(selectColFileButton);
@@ -91,6 +94,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    barsButton.addActionListener(this);
 	    pianoButton.addActionListener(this);
 	    ranParButton.addActionListener(this);
+	    rainParButton.addActionListener(this);
 	    statsButton.addActionListener(this);
 	    selectColFileButton.addActionListener(this);
 	    selectParamButton.addActionListener(this);
@@ -134,6 +138,8 @@ public class Welcome extends JDialog implements ActionListener {
 	    	style = "Piano";
 	    } else if(event.getSource() == ranParButton) {
 	    	style = "RandomParticle";
+	    } else if(event.getSource() == rainParButton) {
+	    	style = "RainingParticle";
 	    } else if(event.getSource() == statsButton){
 	    	style = "Stats";
 	    } else if(event.getSource() == selectColFileButton) {
