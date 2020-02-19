@@ -31,11 +31,11 @@ public class RandomTriangleVisualisation extends ParticleVisualisation{
 	@Override
 	public void drawParticle(Particle p, double vertPerc) {
 		app.triangle((float)(p.getX()), 
-			     	 (float)(p.getY() + p.getR()*(Math.sqrt(3.0)/2)), 
-			     	 (float)(p.getX() + p.getR()), 
-			     	 (float)(p.getY() - p.getR()*(Math.sqrt(3.0)/2)),
-			     	 (float)(p.getX() - p.getR()),
-			     	 (float)(p.getY() - p.getR()*(Math.sqrt(3.0)/2)));
+			     	 (float)(p.getY() + vertPerc*p.getR()*(Math.sqrt(3.0)/2)), 
+			     	 (float)(p.getX() + vertPerc*p.getR()), 
+			     	 (float)(p.getY() - vertPerc*p.getR()*(Math.sqrt(3.0)/2)),
+			     	 (float)(p.getX() - vertPerc*p.getR()),
+			     	 (float)(p.getY() - vertPerc*p.getR()*(Math.sqrt(3.0)/2)));
 	}
 
 	@Override
