@@ -47,6 +47,7 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JRadioButton ranParButton = new JRadioButton("Random Particles");
 	private final JRadioButton ranTriButton = new JRadioButton("Random Triangles");
 	private final JRadioButton rainParButton = new JRadioButton("Raining Particles");
+	private final JRadioButton dyingStarsButton = new JRadioButton("Dying Stars");
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
 	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles Per Frame (Experimental!)");
@@ -83,6 +84,8 @@ public class Welcome extends JDialog implements ActionListener {
 	    bg.add(ranTriButton);
 	    contents.add(rainParButton);
 	    bg.add(rainParButton);
+	    contents.add(dyingStarsButton);
+	    bg.add(dyingStarsButton);
 	    contents.add(statsButton);
 	    bg.add(statsButton);
 	    contents.add(selectColFileButton);
@@ -99,6 +102,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    ranParButton.addActionListener(this);
 	    ranTriButton.addActionListener(this);
 	    rainParButton.addActionListener(this);
+	    dyingStarsButton.addActionListener(this);
 	    statsButton.addActionListener(this);
 	    selectColFileButton.addActionListener(this);
 	    selectParamButton.addActionListener(this);
@@ -146,6 +150,8 @@ public class Welcome extends JDialog implements ActionListener {
 	    	style = "RandomTriangle";
 	    } else if(event.getSource() == rainParButton) {
 	    	style = "RainingParticle";
+	    } else if(event.getSource() == dyingStarsButton) {
+	    	style = "DyingStars";
 	    } else if(event.getSource() == statsButton){
 	    	style = "Stats";
 	    } else if(event.getSource() == selectColFileButton) {
