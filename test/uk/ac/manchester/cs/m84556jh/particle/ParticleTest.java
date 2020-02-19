@@ -10,7 +10,7 @@ import uk.ac.manchester.cs.m84556jh.particle.Particle;
 public class ParticleTest {
 	
 	private Col c1 = new Col(50,50,50);
-	private Particle p1 = new Particle(5, 0, 100, 90, c1, 5);
+	private Particle p1 = new Particle(5, 0, 100, 90, c1, 5, 500);
 
 	@Test
 	public void test() {
