@@ -21,7 +21,7 @@ public class BarsVisualisation extends ParticleVisualisation{
 
 	@Override
 	public void addParticle(Note note, double ampSize) {
-		particles.add(new Particle((int)(sizeFactor*ampSize), 1, app.height/2, 90, note.getCol(cp), velMag));
+		particles.add(new Particle((int)(sizeFactor*ampSize), 1, app.height/2, 90, note.getCol(cp), velMag, 500));
 	}
 
 	@Override

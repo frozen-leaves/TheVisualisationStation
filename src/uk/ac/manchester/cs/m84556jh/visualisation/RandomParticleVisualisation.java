@@ -25,7 +25,7 @@ public class RandomParticleVisualisation extends ParticleVisualisation{
 
 	@Override
 	public void addParticle(Note note, double ampSize) {
-		particles.add(new Particle((int)(sizeFactor*ampSize), app.width/2, app.height/2, emitAngle, note.getCol(cp), velMag));
+		particles.add(new Particle((int)(sizeFactor*ampSize), app.width/2, app.height/2, emitAngle, note.getCol(cp), velMag, 500));
 	}
 
 	@Override
