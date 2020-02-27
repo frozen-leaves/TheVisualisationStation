@@ -3,6 +3,7 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.UIManager;
@@ -35,6 +36,9 @@ public class Launcher extends PApplet {
 	Random ran = new Random();
 	int eachVisSeconds = 20;
 	//END
+	ArrayList<Spectrum> spectrums = new ArrayList<Spectrum>();
+	ArrayList<File> files = new ArrayList<File>();
+	PlaylistLoader pll;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -80,17 +84,28 @@ public class Launcher extends PApplet {
     	bpm = new BPM(3*fps, w.bpmBufSize, fps, 32, 10);
     	if(w.useDefaultColFile)
     		populateNoteCols(new File("colours.txt"));
-    		
-    	selectInput("Select an MP3 file to use:", "mp3Selected");
-    }
-    
-    public void mp3Selected(File mp3) {
+    	
     	if(visType == "ran") {
     		setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
     	} else {
     		setVisualisation(visType);
     	}
-    	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
+    	
+    	//Load spectrum for first file in array
+    	spectrum = new Spectrum(this, files.get(0).getAbsolutePath(), 4096);
+    	//Remove first file from file array
+    	files.remove(0);
+    	//Pass file array and spectrum array to second thread PlaylistLoader
+    	pll = new PlaylistLoader(this, files, spectrums);
+    	new Thread(pll).start();
+    	//Play audio file
+    	spectrum.play();
+    	
+    }
+    
+    public void audioFileSelected(File audioFile) {
+    	//Add file to file arraylist
+    	files.add(audioFile);
     }
     
     public void setVisualisation(String visName) {
@@ -117,6 +132,8 @@ public class Launcher extends PApplet {
 		noStroke();
 		noCursor();
 		colorMode(HSB, 255, 100, 100);
+		
+		
 		
 		//RANDOM VISUALISATION IMPLEMENTATION
 		//Change visualisation if random and eachVisSeconds seconds has passed

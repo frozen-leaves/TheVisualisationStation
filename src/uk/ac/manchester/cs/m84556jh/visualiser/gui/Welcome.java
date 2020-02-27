@@ -189,6 +189,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    	percMaxP = n.percMaxP;
 	    	numMaxP = n.numMaxP;
 	    } else if(event.getSource() == selectMP3Button){
+	    	new Playlist(app);
 	    	dispose();
 	    } else {
 	    	System.exit(0);
