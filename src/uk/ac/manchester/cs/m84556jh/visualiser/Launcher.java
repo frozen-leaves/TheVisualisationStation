@@ -3,6 +3,7 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 import javax.swing.UIManager;
 
@@ -28,6 +29,12 @@ public class Launcher extends PApplet {
 	Visualisation vis;
 	CBCol pixelBuffer;
 	Welcome w;
+	//RANDOM IMPLEMENTATION
+	int framesPassed;
+	String[] visTypes = {"Bars", "Circle", "DyingStars", "Piano", "RainingParticle", "RandomTriangle", "RandomParticle", "Rectangle", "Spiral"};
+	Random ran = new Random();
+	int eachVisSeconds = 20;
+	//END
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -78,13 +85,21 @@ public class Launcher extends PApplet {
     }
     
     public void mp3Selected(File mp3) {
-    	String className = "uk.ac.manchester.cs.m84556jh.visualisation." + visType + "Visualisation";
+    	if(visType == "ran") {
+    		setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
+    	} else {
+    		setVisualisation(visType);
+    	}
+    	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
+    }
+    
+    public void setVisualisation(String visName) {
+    	String className = "uk.ac.manchester.cs.m84556jh.visualisation." + visName + "Visualisation";
     	try {
 			vis = (Visualisation)Class.forName(className).getDeclaredConstructor(new Class[] {PApplet.class, ColPal.class}).newInstance(this, noteCols);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	spectrum = new Spectrum(this, mp3.getAbsolutePath(), 4096);
     }
     
     public void populateNoteCols(File cols) {
@@ -102,6 +117,16 @@ public class Launcher extends PApplet {
 		noStroke();
 		noCursor();
 		colorMode(HSB, 255, 100, 100);
+		
+		//RANDOM VISUALISATION IMPLEMENTATION
+		//Change visualisation if random and eachVisSeconds seconds has passed
+		framesPassed++;
+		if(visType == "ran" && framesPassed == eachVisSeconds*fps) {
+			framesPassed = 0;
+			setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
+		}
+		
+		//END
 		
 		if(spectrum != null && noteCols != null) {
 			spectrum.analyse();
