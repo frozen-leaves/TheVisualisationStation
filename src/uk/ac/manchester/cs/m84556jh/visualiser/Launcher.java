@@ -149,37 +149,35 @@ public class Launcher extends PApplet {
 			
 			//END
 			
-			if(spectrum != null && noteCols != null) {
-				spectrum.analyse();
-				//Get max notes in spectrum determined by user preference
-				//If not a ParticleVisualisation, only get one note
-				Note[] maxNotes = new Note[0];
-				if(vis instanceof ParticleVisualisation) {
-					switch(w.numPType) {
-					case 0:
-						maxNotes = spectrum.getMaxFreq();
-						break;
-					case 1:
-						maxNotes = spectrum.getNMaxFreqs(w.numMaxP);
-						break;
-					case 2:
-						maxNotes = spectrum.getMaxFreqs(w.percMaxP);
-						break;
-					}
-				} else {
+			spectrum.analyse();
+			//Get max notes in spectrum determined by user preference
+			//If not a ParticleVisualisation, only get one note
+			Note[] maxNotes = new Note[0];
+			if(vis instanceof ParticleVisualisation) {
+				switch(w.numPType) {
+				case 0:
 					maxNotes = spectrum.getMaxFreq();
+					break;
+				case 1:
+					maxNotes = spectrum.getNMaxFreqs(w.numMaxP);
+					break;
+				case 2:
+					maxNotes = spectrum.getMaxFreqs(w.percMaxP);
+					break;
 				}
-				
-				key.calc(maxNotes);
-				bpm.calcBPM(spectrum);
-				vis.draw(maxNotes,
-					     key,
-						 bpm,
-						 spectrum.getTotAmp(),
-						 amp,
-						 spectrum.getMaxOctave(),
-						 pixelBuffer);
+			} else {
+				maxNotes = spectrum.getMaxFreq();
 			}
+			
+			key.calc(maxNotes);
+			bpm.calcBPM(spectrum);
+			vis.draw(maxNotes,
+				     key,
+					 bpm,
+					 spectrum.getTotAmp(),
+					 amp,
+					 spectrum.getMaxOctave(),
+					 pixelBuffer);
 			
 		} else {
 			if((spectrum = nextSpectrum) != null) {
