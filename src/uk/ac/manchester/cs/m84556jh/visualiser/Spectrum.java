@@ -18,7 +18,6 @@ public class Spectrum {
 	
 	public Spectrum(PApplet app, String fileName, int bands) {
 		music = new SoundFile(app, fileName);
-	    music.loop();
 	    samFreq = (int)(music.frames()/music.duration());
 	    spec = new float[bands];
 	    fft = new FFT(app, bands);
@@ -28,6 +27,14 @@ public class Spectrum {
 	
 	public void analyse() {
 		fft.analyze(spec);
+	}
+	
+	public void play() {
+		music.play();
+	}
+	
+	public boolean isPlaying() {
+		return music.isPlaying();
 	}
 	
 	//Get a sub-band of the frequency spectum, based on the
