@@ -1,26 +1,19 @@
 package uk.ac.manchester.cs.m84556jh.visualiser;
 
 import java.io.File;
-import java.util.ArrayList;
-
-import processing.core.PApplet;
 
 public class PlaylistLoader implements Runnable {
 	
-	private PApplet app;
-	private ArrayList<File> files;
-	private ArrayList<Spectrum> audioSpectrums;
+	private Launcher app;
+	private File file;
 	
-	public PlaylistLoader(PApplet launcher, ArrayList<File> fileArray, ArrayList<Spectrum> audioArray) {
+	public PlaylistLoader(Launcher launcher, File file) {
 		app = launcher;
-		files = fileArray;
-		audioSpectrums = audioArray;
+		this.file = file;
 	}
 	
 	public void run() {
-		for(int i = 0; i < files.size(); i++) {
-			audioSpectrums.add(new Spectrum(app, files.get(i).getAbsolutePath(), 4096));
-		}
+			app.nextSpectrum = new Spectrum(app, file.getAbsolutePath(), 4096);
 	}
 
 }

@@ -36,7 +36,7 @@ public class Launcher extends PApplet {
 	Random ran = new Random();
 	int eachVisSeconds = 20;
 	//END
-	ArrayList<Spectrum> spectrums = new ArrayList<Spectrum>();
+	public Spectrum nextSpectrum = null;
 	ArrayList<File> files = new ArrayList<File>();
 	PlaylistLoader pll;
 	
@@ -93,13 +93,20 @@ public class Launcher extends PApplet {
     	
     	//Load spectrum for first file in array
     	spectrum = new Spectrum(this, files.get(0).getAbsolutePath(), 4096);
-    	//Remove first file from file array
-    	files.remove(0);
-    	//Pass file array and spectrum array to second thread PlaylistLoader
-    	pll = new PlaylistLoader(this, files, spectrums);
-    	new Thread(pll).start();
     	//Play audio file
     	spectrum.play();
+    	//Remove first file from file array
+    	files.remove(0);
+    	loadNextFileSpectrum();
+    	
+    }
+    
+    public void loadNextFileSpectrum(){
+    	//Pass file array and spectrum array to second thread PlaylistLoader
+    	nextSpectrum = null;
+    	pll = new PlaylistLoader(this, files.get(0));
+    	files.remove(0);
+    	new Thread(pll).start();
     	
     }
     
@@ -132,6 +139,8 @@ public class Launcher extends PApplet {
 		noStroke();
 		noCursor();
 		colorMode(HSB, 255, 100, 100);
+		
+		
 		
 		
 		
