@@ -3,7 +3,8 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 import javax.swing.UIManager;
@@ -36,9 +37,10 @@ public class Launcher extends PApplet {
 	Random ran = new Random();
 	int eachVisSeconds = 20;
 	//END
-	public Spectrum nextSpectrum = null;
-	ArrayList<File> files = new ArrayList<File>();
+	public volatile Spectrum nextSpectrum = null;
+	Queue<File> files = new LinkedList<File>();
 	PlaylistLoader pll;
+	Boolean endOfPlaylist = false;
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -91,27 +93,22 @@ public class Launcher extends PApplet {
     		setVisualisation(visType);
     	}
     	
-    	//Load spectrum for first file in array
-    	spectrum = new Spectrum(this, files.get(0).getAbsolutePath(), 4096);
-    	//Play audio file
-    	spectrum.play();
-    	//Remove first file from file array
-    	files.remove(0);
     	loadNextFileSpectrum();
-    	
     }
     
     public void loadNextFileSpectrum(){
     	//Pass file array and spectrum array to second thread PlaylistLoader
     	nextSpectrum = null;
-    	pll = new PlaylistLoader(this, files.get(0));
-    	files.remove(0);
-    	new Thread(pll).start();
-    	
+    	if(files.isEmpty()) {
+    		endOfPlaylist = true;
+    	} else {
+    		pll = new PlaylistLoader(this, files.remove());
+        	new Thread(pll).start();
+    	}
     }
     
     public void audioFileSelected(File audioFile) {
-    	//Add file to file arraylist
+    	//Add file to file queue
     	files.add(audioFile);
     }
     
@@ -140,50 +137,69 @@ public class Launcher extends PApplet {
 		noCursor();
 		colorMode(HSB, 255, 100, 100);
 		
-		
-		
-		
-		
-		//RANDOM VISUALISATION IMPLEMENTATION
-		//Change visualisation if random and eachVisSeconds seconds has passed
-		framesPassed++;
-		if(visType == "ran" && framesPassed == eachVisSeconds*fps) {
-			framesPassed = 0;
-			setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
-		}
-		
-		//END
-		
-		if(spectrum != null && noteCols != null) {
-			spectrum.analyse();
-			//Get max notes in spectrum determined by user preference
-			//If not a ParticleVisualisation, only get one note
-			Note[] maxNotes = new Note[0];
-			if(vis instanceof ParticleVisualisation) {
-				switch(w.numPType) {
-				case 0:
-					maxNotes = spectrum.getMaxFreq();
-					break;
-				case 1:
-					maxNotes = spectrum.getNMaxFreqs(w.numMaxP);
-					break;
-				case 2:
-					maxNotes = spectrum.getMaxFreqs(w.percMaxP);
-					break;
-				}
-			} else {
-				maxNotes = spectrum.getMaxFreq();
+		//If a song is playing, run the visualisation as normal
+		if(spectrum != null && spectrum.isPlaying()) {
+			//RANDOM VISUALISATION IMPLEMENTATION
+			//Change visualisation if random and eachVisSeconds seconds has passed
+			framesPassed++;
+			if(visType == "ran" && framesPassed == eachVisSeconds*fps) {
+				framesPassed = 0;
+				setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
 			}
 			
-			key.calc(maxNotes);
-			bpm.calcBPM(spectrum);
-			vis.draw(maxNotes,
-				     key,
-					 bpm,
-					 spectrum.getTotAmp(),
-					 amp,
-					 spectrum.getMaxOctave(),
-					 pixelBuffer);
+			//END
+			
+			if(spectrum != null && noteCols != null) {
+				spectrum.analyse();
+				//Get max notes in spectrum determined by user preference
+				//If not a ParticleVisualisation, only get one note
+				Note[] maxNotes = new Note[0];
+				if(vis instanceof ParticleVisualisation) {
+					switch(w.numPType) {
+					case 0:
+						maxNotes = spectrum.getMaxFreq();
+						break;
+					case 1:
+						maxNotes = spectrum.getNMaxFreqs(w.numMaxP);
+						break;
+					case 2:
+						maxNotes = spectrum.getMaxFreqs(w.percMaxP);
+						break;
+					}
+				} else {
+					maxNotes = spectrum.getMaxFreq();
+				}
+				
+				key.calc(maxNotes);
+				bpm.calcBPM(spectrum);
+				vis.draw(maxNotes,
+					     key,
+						 bpm,
+						 spectrum.getTotAmp(),
+						 amp,
+						 spectrum.getMaxOctave(),
+						 pixelBuffer);
+			}
+			
+		} else {
+			if((spectrum = nextSpectrum) != null) {
+				loadNextFileSpectrum();
+				spectrum.play();
+			} else {
+				if(endOfPlaylist) {
+					//MAYBE SHOW DIALOG TO RETURN TO PLAYLIST SCREEN OR JUST EXIT
+					System.exit(0);
+				} else {
+					//SHOW SOME KIND OF LOADING SCREEN
+					textSize(64);
+					text("Loading", width/2, height/2);
+				}
+				
+			}
 		}
+		
+		
+		
+		
 	}
 }
