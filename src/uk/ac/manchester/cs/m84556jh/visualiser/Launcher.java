@@ -39,7 +39,7 @@ public class Launcher extends PApplet {
 	//END
 	public volatile Spectrum nextSpectrum = null;
 	Queue<File> files = new LinkedList<File>();
-	PlaylistLoader pll;
+	SpectrumLoader specLoader;
 	Boolean endOfPlaylist = false;
 	
 	public static void main(String[] args) {
@@ -102,8 +102,8 @@ public class Launcher extends PApplet {
     	if(files.isEmpty()) {
     		endOfPlaylist = true;
     	} else {
-    		pll = new PlaylistLoader(this, files.remove());
-        	new Thread(pll).start();
+    		specLoader = new SpectrumLoader(this, files.remove());
+        	new Thread(specLoader).start();
     	}
     }
     

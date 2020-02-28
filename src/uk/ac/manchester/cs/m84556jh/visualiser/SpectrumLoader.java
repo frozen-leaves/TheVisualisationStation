@@ -2,12 +2,12 @@ package uk.ac.manchester.cs.m84556jh.visualiser;
 
 import java.io.File;
 
-public class PlaylistLoader implements Runnable {
+public class SpectrumLoader implements Runnable {
 	
 	private Launcher app;
 	private File file;
 	
-	public PlaylistLoader(Launcher launcher, File file) {
+	public SpectrumLoader(Launcher launcher, File file) {
 		app = launcher;
 		this.file = file;
 	}
