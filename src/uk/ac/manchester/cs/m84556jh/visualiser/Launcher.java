@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Random;
 
-import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import processing.core.PApplet;
@@ -23,7 +22,9 @@ public class Launcher extends PApplet {
 	int width = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	int height = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	ColPal noteCols;
+	
 	Spectrum spectrum;
+	public volatile Spectrum nextSpectrum = null;
 	Amplitude amp;
 	Key key;
 	BPM bpm;
@@ -31,16 +32,13 @@ public class Launcher extends PApplet {
 	Visualisation vis;
 	CBCol pixelBuffer;
 	Welcome w;
-	//RANDOM IMPLEMENTATION
 	int framesPassed;
-	String[] visTypes = {"Bars", "Circle", "DyingStars", "Piano", "RainingParticle", "RandomTriangle", "RandomParticle", "Rectangle", "Spiral"};
 	Random ran = new Random();
 	int eachVisSeconds = 20;
-	//END
-	public volatile Spectrum nextSpectrum = null;
 	public LinkedList<File> files = new LinkedList<File>();
 	SpectrumLoader specLoader;
 	Boolean endOfPlaylist = false;
+	String[] visTypes = {"Bars", "Circle", "DyingStars", "Piano", "RainingParticle", "RandomTriangle", "RandomParticle", "Rectangle", "Spiral"};
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
@@ -141,15 +139,12 @@ public class Launcher extends PApplet {
 		
 		//If a song is playing, run the visualisation as normal
 		if(spectrum != null && spectrum.isPlaying()) {
-			//RANDOM VISUALISATION IMPLEMENTATION
 			//Change visualisation if random and eachVisSeconds seconds has passed
 			framesPassed++;
 			if(visType == "ran" && framesPassed == eachVisSeconds*fps) {
 				framesPassed = 0;
 				setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
 			}
-			
-			//END
 			
 			spectrum.analyse();
 			//Get max notes in spectrum determined by user preference
@@ -187,19 +182,14 @@ public class Launcher extends PApplet {
 				spectrum.play();
 			} else {
 				if(endOfPlaylist) {
-					//MAYBE SHOW DIALOG TO RETURN TO PLAYLIST SCREEN OR JUST EXIT
 					System.exit(0);
 				} else {
-					//SHOW SOME KIND OF LOADING SCREEN
 					textSize(64);
-					text("Loading", width/2, height/2);
+					textAlign(CENTER);
+					text("Loading visualisation...", width/2, height/2);
 				}
 				
 			}
-		}
-		
-		
-		
-		
+		}	
 	}
 }

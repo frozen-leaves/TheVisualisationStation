@@ -21,7 +21,7 @@ public class Playlist extends JDialog implements ActionListener {
 	private final JButton goButton = new JButton("Go");
 	private final JButton addButton = new JButton("Add Song");
 	private final JButton deleteButton = new JButton("Delete Last Song");
-	public volatile JPanel playlistPanel = new JPanel();
+	//public volatile JPanel playlistPanel = new JPanel();
 	
 	public Playlist(Launcher app) {
 		launcher = app;
@@ -35,8 +35,8 @@ public class Playlist extends JDialog implements ActionListener {
 	    buttonPanel.add(deleteButton);
 	    buttonPanel.add(goButton);
 	    contents.add(buttonPanel);
-	    playlistPanel.setLayout(new GridLayout(0,1));
-	    contents.add(playlistPanel);
+	    //playlistPanel.setLayout(new GridLayout(0,1));
+	    //contents.add(playlistPanel);
 	    //Make this class the action listener for each of the buttons
 	    addButton.addActionListener(this);
 	    deleteButton.addActionListener(this);
@@ -63,7 +63,6 @@ public class Playlist extends JDialog implements ActionListener {
     			dispose();
     		}
     	}
-
     	pack();
 	}
 }
