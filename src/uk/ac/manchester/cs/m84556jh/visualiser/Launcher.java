@@ -4,9 +4,9 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import processing.core.PApplet;
@@ -38,7 +38,7 @@ public class Launcher extends PApplet {
 	int eachVisSeconds = 20;
 	//END
 	public volatile Spectrum nextSpectrum = null;
-	Queue<File> files = new LinkedList<File>();
+	public LinkedList<File> files = new LinkedList<File>();
 	SpectrumLoader specLoader;
 	Boolean endOfPlaylist = false;
 	
@@ -110,6 +110,8 @@ public class Launcher extends PApplet {
     public void audioFileSelected(File audioFile) {
     	//Add file to file queue
     	files.add(audioFile);
+    	//WHY IS THIS NOT WORKING?
+    	//w.p.playlistPanel.add(new JLabel(files.peekLast().getAbsolutePath()));
     }
     
     public void setVisualisation(String visName) {

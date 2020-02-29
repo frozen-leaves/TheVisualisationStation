@@ -19,6 +19,7 @@ import javax.swing.JRadioButton;
 
 import processing.core.PApplet;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
+import uk.ac.manchester.cs.m84556jh.visualiser.Launcher;
 
 public class Welcome extends JDialog implements ActionListener {
 
@@ -38,6 +39,7 @@ public class Welcome extends JDialog implements ActionListener {
 	public boolean useDefaultColFile = true;
 	public ColPal noteCols;
 	private PApplet app;
+	public Playlist p;
 	
 	private final JLabel selStyle = new JLabel("1. Select Visualisation Style:");
 	private final JLabel blankLabel = new JLabel("");
@@ -189,7 +191,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    	percMaxP = n.percMaxP;
 	    	numMaxP = n.numMaxP;
 	    } else if(event.getSource() == selectMP3Button){
-	    	new Playlist(app);
+	    	p = new Playlist((Launcher)app);
 	    	dispose();
 	    } else {
 	    	System.exit(0);
