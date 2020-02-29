@@ -54,7 +54,8 @@ public class Playlist extends JDialog implements ActionListener {
     	if(event.getSource() == addButton) {
     		launcher.selectInput("Select an MP3 file to use:", "audioFileSelected");
     	} else if(event.getSource() == deleteButton) {
-    		//STUB: IMPLEMENT
+    		if(launcher.files.size() > 0)
+    		    launcher.files.removeLast();
     	} else {
     		if(launcher.files.size() < 1) {
     			JOptionPane.showMessageDialog(this, "Must load at least one file!");
