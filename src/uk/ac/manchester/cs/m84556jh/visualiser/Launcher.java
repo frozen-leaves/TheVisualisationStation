@@ -34,7 +34,7 @@ public class Launcher extends PApplet {
 	Welcome w;
 	int framesPassed;
 	Random ran = new Random();
-	int eachVisSeconds = 20;
+	int eachVisSeconds;
 	public LinkedList<File> files = new LinkedList<File>();
 	SpectrumLoader specLoader;
 	Boolean endOfPlaylist = false;
@@ -73,6 +73,7 @@ public class Launcher extends PApplet {
 	    visType = w.style;
     	fps = w.fps;
     	frameRate(fps);
+    	eachVisSeconds = w.shuffleNumSeconds;
     	
     	//If drawing a circle, size of buffer must be minimum of width and height
     	if(visType == "Circle")

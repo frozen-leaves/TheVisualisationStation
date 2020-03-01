@@ -14,8 +14,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 import processing.core.PApplet;
 import uk.ac.manchester.cs.m84556jh.colour.ColPal;
@@ -37,6 +39,7 @@ public class Welcome extends JDialog implements ActionListener {
 	public int percMaxP = 90;
 	public int numMaxP = 5;
 	public boolean useDefaultColFile = true;
+	public int shuffleNumSeconds = 20;
 	public ColPal noteCols;
 	private PApplet app;
 	public Playlist p;
@@ -53,7 +56,9 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JRadioButton ranTriButton = new JRadioButton("Random Triangles");
 	private final JRadioButton rainParButton = new JRadioButton("Raining Particles");
 	private final JRadioButton dyingStarsButton = new JRadioButton("Dying Stars");
-	private final JRadioButton ranButton = new JRadioButton("RANDOM");
+	private final JRadioButton shuffleButton = new JRadioButton("SHUFFLE");
+	private final JLabel shuffleLabel = new JLabel("Seconds per visualisation:");
+	private final JTextField shuffleText = new JTextField("20");
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
 	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles Per Frame (Experimental!)");
@@ -99,8 +104,13 @@ public class Welcome extends JDialog implements ActionListener {
 	    bg.add(dyingStarsButton);
 	    rbPanel.add(statsButton);
 	    bg.add(statsButton);
-	    rbPanel.add(ranButton);
-	    bg.add(ranButton);
+	    JPanel shufflePanel = new JPanel();
+	    shufflePanel.setLayout(new GridLayout(1,0));
+	    shufflePanel.add(shuffleButton);
+	    shufflePanel.add(shuffleLabel);
+	    shufflePanel.add(shuffleText);
+	    rbPanel.add(shufflePanel);
+	    bg.add(shuffleButton);
 	    contents.add(rbPanel);
 	    JPanel bPanel = new JPanel();
 	    bPanel.setLayout(new GridLayout(0,1));
@@ -121,7 +131,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    rainParButton.addActionListener(this);
 	    dyingStarsButton.addActionListener(this);
 	    statsButton.addActionListener(this);
-	    ranButton.addActionListener(this);
+	    shuffleButton.addActionListener(this);
 	    selectColFileButton.addActionListener(this);
 	    selectParamButton.addActionListener(this);
 	    selectNumParticlesButton.addActionListener(this);
@@ -172,7 +182,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    	style = "DyingStars";
 	    } else if(event.getSource() == statsButton){
 	    	style = "Stats";
-	    } else if(event.getSource() == ranButton) {
+	    } else if(event.getSource() == shuffleButton) {
 	    	style = "ran";
 	    } else if(event.getSource() == selectColFileButton) {
 	    	useDefaultColFile = false;
@@ -191,6 +201,11 @@ public class Welcome extends JDialog implements ActionListener {
 	    	percMaxP = n.percMaxP;
 	    	numMaxP = n.numMaxP;
 	    } else if(event.getSource() == selectMP3Button){
+	    	try {
+	    		shuffleNumSeconds = Integer.parseInt(shuffleText.getText());
+	    	} catch(NumberFormatException e){
+	    		JOptionPane.showMessageDialog(null, "Please ensure all the values entered are numbers in the range required", "Error", JOptionPane.ERROR_MESSAGE); 
+	    	}
 	    	p = new Playlist((Launcher)app);
 	    	dispose();
 	    } else {
