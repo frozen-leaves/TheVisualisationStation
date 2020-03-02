@@ -26,7 +26,7 @@ public class Playlist extends JDialog implements ActionListener {
 	public Playlist(Launcher app) {
 		launcher = app;
 		setModalityType(DEFAULT_MODALITY_TYPE);
-	    setTitle("Application Parameters");
+	    setTitle("Playlist");
 	    Container contents = getContentPane();
 	    contents.setLayout(new GridLayout(0,1));
 	    JPanel buttonPanel = new JPanel();
