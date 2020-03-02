@@ -36,7 +36,7 @@ public abstract class ParticleVisualisation extends Visualisation{
 	public void draw(Note[] notes, Key key, BPM bpm, double totAmp, Amplitude amp, int oct, CBCol pixelBuffer) {
 		
 		//Do before drawing particles, may be drawing key
-		beforeParticles(key.getCol(cp));
+		beforeParticles(key.getCol(cp, 5));
 		
 		double vertPerc = vs.calcVertPerc(bpm.isBeat());
 			
@@ -64,7 +64,7 @@ public abstract class ParticleVisualisation extends Visualisation{
 		}
 		
 		//Do after drawing particles, may draw key
-		afterParticles(key.getCol(cp));
+		afterParticles(key.getCol(cp, 5));
 		
 		
 		

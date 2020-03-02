@@ -23,7 +23,7 @@ public abstract class BufferVisualisation extends Visualisation{
 	@Override
 	public void draw(Note[] notes, Key key, BPM bpm, double totAmp, Amplitude amp, int oct, CBCol pixelBuffer) {
 		
-		beforeLoop(key.getCol(cp));
+		beforeLoop(key.getCol(cp, 5));
 		
 		double vertPerc = vs.calcVertPerc(bpm.isBeat());
 		

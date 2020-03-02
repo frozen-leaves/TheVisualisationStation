@@ -61,7 +61,7 @@ public class KeyTest {
 	
 	@Test
 	public void testGetCol() {
-		Col ntCol = nt.getCol(colP);
+		Col ntCol = nt.getCol(colP, 1);
 		assertEquals(ntCol.getHue(), 240);
 		assertEquals(ntCol.getSat(), 100);
 		assertEquals(ntCol.getBri(), 50);
