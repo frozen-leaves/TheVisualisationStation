@@ -106,13 +106,6 @@ public class Launcher extends PApplet {
     	}
     }
     
-    public void audioFileSelected(File audioFile) {
-    	//Add file to file queue
-    	files.add(audioFile);
-    	//WHY IS THIS NOT WORKING?
-    	//w.p.playlistPanel.add(new JLabel(files.peekLast().getAbsolutePath()));
-    }
-    
     public void setVisualisation(String visName) {
     	String className = "uk.ac.manchester.cs.m84556jh.visualisation." + visName + "Visualisation";
     	try {
