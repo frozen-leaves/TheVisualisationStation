@@ -1,5 +1,6 @@
 package uk.ac.manchester.cs.m84556jh.visualiser.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -32,15 +33,15 @@ public class Playlist extends JDialog implements ActionListener {
 		setModalityType(DEFAULT_MODALITY_TYPE);
 	    setTitle("Playlist");
 	    Container contents = getContentPane();
-	    contents.setLayout(new GridLayout(0,1));
+	    contents.setLayout(new BorderLayout());
 	    JPanel buttonPanel = new JPanel();
 	    buttonPanel.setLayout(new GridLayout(0,3));
 	    buttonPanel.add(addButton);
 	    buttonPanel.add(deleteButton);
 	    buttonPanel.add(goButton);
-	    contents.add(buttonPanel);
+	    contents.add(buttonPanel, BorderLayout.NORTH);
 	    playlistPanel.setLayout(new GridLayout(0,1));
-	    contents.add(playlistPanel);
+	    contents.add(playlistPanel, BorderLayout.CENTER);
 	    //Make this class the action listener for each of the buttons
 	    addButton.addActionListener(this);
 	    deleteButton.addActionListener(this);
