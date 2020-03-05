@@ -38,6 +38,7 @@ public class Launcher extends PApplet {
 	public LinkedList<File> files = new LinkedList<File>();
 	SpectrumLoader specLoader;
 	Boolean endOfPlaylist = false;
+	Boolean useDefaultColFile = true;
 	String[] visTypes = {"Bars", "Circle", "DyingStars", "Piano", "RainingParticle", "RandomTriangle", "RandomParticle", "Rectangle", "Spiral"};
 	
 	public static void main(String[] args) {
@@ -83,7 +84,7 @@ public class Launcher extends PApplet {
     	amp = new Amplitude(w.ampBufSecs*fps, w.ampMinSize, (int)(w.ampPerBufSecs*fps));
     	key = new Key(w.keyBufSecs*fps);
     	bpm = new BPM(3*fps, w.bpmBufSize, fps, 32, 10);
-    	if(w.useDefaultColFile)
+    	if(useDefaultColFile)
     		populateNoteCols(new File("colours.txt"));
     	
     	if(visType == "ran") {
@@ -117,7 +118,10 @@ public class Launcher extends PApplet {
     
     public void populateNoteCols(File cols) {
     	try {
-			noteCols = new ColPal(cols);
+    		if(cols != null && cols.isFile()) {
+    			noteCols = new ColPal(cols);
+    			useDefaultColFile = false;
+    		}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

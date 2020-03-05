@@ -38,7 +38,6 @@ public class Welcome extends JDialog implements ActionListener {
 	public int numPType = 0;
 	public int percMaxP = 90;
 	public int numMaxP = 5;
-	public boolean useDefaultColFile = true;
 	public int shuffleNumSeconds = 20;
 	public ColPal noteCols;
 	private PApplet app;
@@ -185,7 +184,6 @@ public class Welcome extends JDialog implements ActionListener {
 	    } else if(event.getSource() == shuffleButton) {
 	    	style = "ran";
 	    } else if(event.getSource() == selectColFileButton) {
-	    	useDefaultColFile = false;
 	    	app.selectInput("Select a colour file to use:", "populateNoteCols");
 	    } else if(event.getSource() == selectParamButton) {
 	    	Parameters p = new Parameters();
