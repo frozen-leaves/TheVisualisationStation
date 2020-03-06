@@ -76,7 +76,6 @@ public class Welcome extends JDialog implements ActionListener {
 	    tImg.setPreferredSize(new Dimension((int)(0.5*app.width), (int)(0.25*app.width)));
 	    contents.add(tImg);
 	    ButtonGroup bg = new ButtonGroup();
-	    contents.add(selStyle);
 	    //Add GridLayout to keep buttons in two columns
 	    JPanel rbPanel = new JPanel();
 	    rbPanel.setLayout(new GridLayout(0,2));
