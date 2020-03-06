@@ -35,6 +35,8 @@ public class Launcher extends PApplet {
 	int framesPassed;
 	Random ran = new Random();
 	int eachVisSeconds;
+	String curVis;
+	String nextVis;
 	public LinkedList<File> files = new LinkedList<File>();
 	SpectrumLoader specLoader;
 	Boolean endOfPlaylist = false;
@@ -88,7 +90,8 @@ public class Launcher extends PApplet {
     		populateNoteCols(new File("colours.txt"));
     	
     	if(visType == "ran") {
-    		setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
+    		nextVis = visTypes[ran.nextInt(visTypes.length)];
+    		setVisualisation(nextVis);
     	} else {
     		setVisualisation(visType);
     	}
@@ -141,7 +144,10 @@ public class Launcher extends PApplet {
 			framesPassed++;
 			if(visType == "ran" && framesPassed == eachVisSeconds*fps) {
 				framesPassed = 0;
-				setVisualisation(visTypes[ran.nextInt(visTypes.length)]);
+				curVis = nextVis;
+				//Change next visualisation until different to last one
+				while((nextVis = visTypes[ran.nextInt(visTypes.length)]).equals(curVis));
+				setVisualisation(nextVis);
 			}
 			
 			spectrum.analyse();
