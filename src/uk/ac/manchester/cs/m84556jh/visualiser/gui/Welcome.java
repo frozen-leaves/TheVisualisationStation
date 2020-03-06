@@ -49,6 +49,7 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JRadioButton circleButton = new JRadioButton("Circular");
 	private final JRadioButton statsButton = new JRadioButton("Print Stats");
 	private final JRadioButton spiralButton = new JRadioButton("Spiral");
+	private final JRadioButton spiralLineButton = new JRadioButton("Spiral Line");
 	private final JRadioButton barsButton = new JRadioButton("Bars");
 	private final JRadioButton pianoButton = new JRadioButton("Piano");
 	private final JRadioButton ranParButton = new JRadioButton("Random Particles");
@@ -89,6 +90,8 @@ public class Welcome extends JDialog implements ActionListener {
 	    bg.add(circleButton);
 	    rbPanel.add(spiralButton);
 	    bg.add(spiralButton);
+	    rbPanel.add(spiralLineButton);
+	    bg.add(spiralLineButton);
 	    rbPanel.add(barsButton);
 	    bg.add(barsButton);
 	    rbPanel.add(pianoButton);
@@ -123,6 +126,7 @@ public class Welcome extends JDialog implements ActionListener {
 	    rectButton.addActionListener(this);
 	    circleButton.addActionListener(this);
 	    spiralButton.addActionListener(this);
+	    spiralLineButton.addActionListener(this);
 	    barsButton.addActionListener(this);
 	    pianoButton.addActionListener(this);
 	    ranParButton.addActionListener(this);
@@ -167,6 +171,8 @@ public class Welcome extends JDialog implements ActionListener {
 	    	style = "Circle";
 	    } else if(event.getSource() == spiralButton){
 	    	style = "Spiral";
+	    } else if(event.getSource() == spiralLineButton) {
+	    	style = "SpiralLine";
 	    } else if(event.getSource() == barsButton) {
 	    	style = "Bars";
 	    } else if(event.getSource() == pianoButton) {

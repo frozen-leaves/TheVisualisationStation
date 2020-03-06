@@ -39,7 +39,7 @@ public class Launcher extends PApplet {
 	SpectrumLoader specLoader;
 	Boolean endOfPlaylist = false;
 	Boolean useDefaultColFile = true;
-	String[] visTypes = {"Bars", "Circle", "DyingStars", "Piano", "RainingParticle", "RandomTriangle", "RandomParticle", "Rectangle", "Spiral"};
+	String[] visTypes = {"Bars", "Circle", "DyingStars", "Piano", "RainingParticle", "RandomTriangle", "RandomParticle", "Rectangle", "Spiral", "SpiralLine"};
 	
 	public static void main(String[] args) {
 	    PApplet.main("uk.ac.manchester.cs.m84556jh.visualiser.Launcher");
