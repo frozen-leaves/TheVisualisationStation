@@ -38,7 +38,7 @@ public class Welcome extends JDialog implements ActionListener {
 	public int numPType = 0;
 	public int percMaxP = 90;
 	public int numMaxP = 5;
-	public int shuffleNumSeconds = 20;
+	public int shuffleNumSeconds = 10;
 	public ColPal noteCols;
 	private PApplet app;
 	public Playlist p;
@@ -57,7 +57,7 @@ public class Welcome extends JDialog implements ActionListener {
 	private final JRadioButton dyingStarsButton = new JRadioButton("Dying Stars");
 	private final JRadioButton shuffleButton = new JRadioButton("SHUFFLE");
 	private final JLabel shuffleLabel = new JLabel("Seconds per visualisation:");
-	private final JTextField shuffleText = new JTextField("20");
+	private final JTextField shuffleText = new JTextField("10");
 	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
 	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
 	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles Per Frame (Experimental!)");
