@@ -39,8 +39,8 @@ public class Launcher extends PApplet {
 	String nextVis;
 	public LinkedList<File> files = new LinkedList<File>();
 	SpectrumLoader specLoader;
-	Boolean endOfPlaylist = false;
-	Boolean useDefaultColFile = true;
+	Boolean endOfPlaylist;
+	Boolean useDefaultColFile;
 	String[] visTypes = {"Bars", "Circle", "DyingStars", "Piano", "RainingParticle", "RandomTriangle", "RandomParticle", "Rectangle", "Spiral"};
 	
 	public static void main(String[] args) {
@@ -71,7 +71,14 @@ public class Launcher extends PApplet {
 	    surface.setIcon(icon);
 	    surface.setTitle("The Visualisation Station");
 	    
-	    //Set parameters from Welcome dialog
+	    //Setup welcome screen and program
+	    setupWelcome();
+    }
+    
+    public void setupWelcome() {
+    	//Set parameters from Welcome dialog
+    	endOfPlaylist = false;
+    	useDefaultColFile = true;
 	    w = new Welcome(this);
 	    visType = w.style;
     	fps = w.fps;
@@ -186,11 +193,12 @@ public class Launcher extends PApplet {
 				spectrum.play();
 			} else {
 				if(endOfPlaylist) {
-					System.exit(0);
+					//Return to welcome screen
+					setupWelcome();
 				} else {
 					textSize(64);
 					textAlign(CENTER);
-					text("Loading visualisation...", width/2, height/2);
+					text("Loading Visualisation...", width/2, height/2);
 				}
 				
 			}
