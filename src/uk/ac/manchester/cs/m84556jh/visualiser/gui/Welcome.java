@@ -9,14 +9,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import processing.core.PApplet;
@@ -43,25 +42,17 @@ public class Welcome extends JDialog implements ActionListener {
 	private PApplet app;
 	public Playlist p;
 	
-	private final JLabel selStyle = new JLabel("1. Select Visualisation Style:");
-	private final JLabel blankLabel = new JLabel("");
-	private final JRadioButton rectButton = new JRadioButton("Rectangular");
-	private final JRadioButton circleButton = new JRadioButton("Circular");
-	private final JRadioButton statsButton = new JRadioButton("Print Stats");
-	private final JRadioButton spiralButton = new JRadioButton("Spiral");
-	private final JRadioButton barsButton = new JRadioButton("Bars");
-	private final JRadioButton pianoButton = new JRadioButton("Piano");
-	private final JRadioButton ranParButton = new JRadioButton("Random Particles");
-	private final JRadioButton ranTriButton = new JRadioButton("Random Triangles");
-	private final JRadioButton rainParButton = new JRadioButton("Raining Particles");
-	private final JRadioButton dyingStarsButton = new JRadioButton("Dying Stars");
-	private final JRadioButton shuffleButton = new JRadioButton("SHUFFLE");
-	private final JLabel shuffleLabel = new JLabel("Seconds per visualisation:");
+	String[] visualisations = {"Rectangle", "Circle", "Stats", "Spiral", "Bars", "Piano", "Random Particle", "Random Triangle", "Raining Particle", "Dying Stars", "SHUFFLE"};
+	
+	private final JComboBox<String> visList = new JComboBox<String>(visualisations);
+	private final JLabel selStyle = new JLabel("Select Visualisation Style:");
+	private JPanel shufflePanel = new JPanel();
+	private final JLabel shuffleLabel = new JLabel("Seconds Per Visualisation:");
 	private final JTextField shuffleText = new JTextField("10");
-	private final JButton selectColFileButton = new JButton("2. Choose Custom Colour File (Optional)");
-	private final JButton selectParamButton = new JButton("3. Customise Parameters (Optional)");
-	private final JButton selectNumParticlesButton = new JButton("4. Select Number of Particles Per Frame (Experimental!)");
-	private final JButton selectMP3Button = new JButton("5. Select MP3");
+	private final JButton selectColFileButton = new JButton("Select Custom Colour File");
+	private final JButton selectParamButton = new JButton("Customise Parameters");
+	private final JButton selectNumParticlesButton = new JButton("Select Number of Particles Per Frame");
+	private final JButton selectMP3Button = new JButton("Load Playlist (GO)");
 	private final JButton exitButton = new JButton("Exit");
 	private TitleImage tImg = new TitleImage("VSTitle.png");
 
@@ -72,71 +63,45 @@ public class Welcome extends JDialog implements ActionListener {
 	    
 	    Container contents = getContentPane();
 	    contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
+	    ImageIcon img = new ImageIcon("icon.png");
+	    setIconImage(img.getImage());
 	    setResizable(false);
 	    tImg.setPreferredSize(new Dimension((int)(0.5*app.width), (int)(0.25*app.width)));
 	    contents.add(tImg);
-	    ButtonGroup bg = new ButtonGroup();
+	    
 	    //Add GridLayout to keep buttons in two columns
-	    JPanel rbPanel = new JPanel();
-	    rbPanel.setLayout(new GridLayout(0,2));
-	    rbPanel.add(selStyle);
-	    rbPanel.add(blankLabel);
-	    rbPanel.add(rectButton);
-	    bg.add(rectButton);
-	    rectButton.setSelected(true);
-	    rbPanel.add(circleButton);
-	    bg.add(circleButton);
-	    rbPanel.add(spiralButton);
-	    bg.add(spiralButton);
-	    rbPanel.add(barsButton);
-	    bg.add(barsButton);
-	    rbPanel.add(pianoButton);
-	    bg.add(pianoButton);
-	    rbPanel.add(ranParButton);
-	    bg.add(ranParButton);
-	    rbPanel.add(ranTriButton);
-	    bg.add(ranTriButton);
-	    rbPanel.add(rainParButton);
-	    bg.add(rainParButton);
-	    rbPanel.add(dyingStarsButton);
-	    bg.add(dyingStarsButton);
-	    rbPanel.add(statsButton);
-	    bg.add(statsButton);
-	    JPanel shufflePanel = new JPanel();
+	    JPanel topPanel = new JPanel();
+	    topPanel.setLayout(new GridLayout(0,2));
+	    topPanel.add(selStyle);
+	    topPanel.add(visList);
+	    visList.setSelectedIndex(0);
+	    visList.addActionListener(this);
+	    shufflePanel.setVisible(false);
 	    shufflePanel.setLayout(new GridLayout(1,0));
-	    shufflePanel.add(shuffleButton);
 	    shufflePanel.add(shuffleLabel);
 	    shufflePanel.add(shuffleText);
-	    rbPanel.add(shufflePanel);
-	    bg.add(shuffleButton);
-	    contents.add(rbPanel);
+	    topPanel.add(shufflePanel);
+	    contents.add(topPanel);
 	    JPanel bPanel = new JPanel();
 	    bPanel.setLayout(new GridLayout(0,1));
-	    bPanel.add(selectColFileButton);
-	    bPanel.add(selectParamButton);
-	    bPanel.add(selectNumParticlesButton);
 	    bPanel.add(selectMP3Button);
+	    bPanel.add(new JLabel("Optional/Experimental Features:"));
+	    JPanel opPanel = new JPanel();
+	    opPanel.setLayout(new GridLayout(1,0));
+	    opPanel.add(selectColFileButton);
+	    opPanel.add(selectParamButton);
+	    opPanel.add(selectNumParticlesButton);
+	    bPanel.add(opPanel);
 	    bPanel.add(exitButton);
 	    contents.add(bPanel);
+	    
 	    //Make this class the action listener for each of the buttons
-	    rectButton.addActionListener(this);
-	    circleButton.addActionListener(this);
-	    spiralButton.addActionListener(this);
-	    barsButton.addActionListener(this);
-	    pianoButton.addActionListener(this);
-	    ranParButton.addActionListener(this);
-	    ranTriButton.addActionListener(this);
-	    rainParButton.addActionListener(this);
-	    dyingStarsButton.addActionListener(this);
-	    statsButton.addActionListener(this);
-	    shuffleButton.addActionListener(this);
 	    selectColFileButton.addActionListener(this);
 	    selectParamButton.addActionListener(this);
 	    selectNumParticlesButton.addActionListener(this);
 	    selectMP3Button.addActionListener(this);
 	    exitButton.addActionListener(this);
-	    ImageIcon img = new ImageIcon("icon.png");
-	    setIconImage(img.getImage());
+	    
 	    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	    addWindowListener(new java.awt.event.WindowAdapter() {
 	        @Override
@@ -160,28 +125,21 @@ public class Welcome extends JDialog implements ActionListener {
 	//Performs actions for buttons
 	public void actionPerformed(ActionEvent event) {
 	    //Check which button has been clicked
-	    if (event.getSource() == rectButton) {
-	    	style = "Rectangle";
-	    } else if(event.getSource() == circleButton){
-	    	style = "Circle";
-	    } else if(event.getSource() == spiralButton){
-	    	style = "Spiral";
-	    } else if(event.getSource() == barsButton) {
-	    	style = "Bars";
-	    } else if(event.getSource() == pianoButton) {
-	    	style = "Piano";
-	    } else if(event.getSource() == ranParButton) {
-	    	style = "RandomParticle";
-	    } else if(event.getSource() == ranTriButton) {
-	    	style = "RandomTriangle";
-	    } else if(event.getSource() == rainParButton) {
-	    	style = "RainingParticle";
-	    } else if(event.getSource() == dyingStarsButton) {
-	    	style = "DyingStars";
-	    } else if(event.getSource() == statsButton){
-	    	style = "Stats";
-	    } else if(event.getSource() == shuffleButton) {
-	    	style = "ran";
+		if (event.getSource() == visList) {
+			String visString = (String)visList.getSelectedItem();
+			if(visString == "SHUFFLE") {
+				//Display selection for seconds per shuffle
+				shufflePanel.setVisible(true);
+				visString = "ran";
+			}else {
+				//Hide selection for seconds per shuffle
+				shufflePanel.setVisible(false);
+			}
+			//Set style as visString
+			visString.replace(" " , "");
+			style = visString;
+			this.validate();
+			this.repaint();
 	    } else if(event.getSource() == selectColFileButton) {
 	    	app.selectInput("Select a colour file to use:", "populateNoteCols");
 	    } else if(event.getSource() == selectParamButton) {
