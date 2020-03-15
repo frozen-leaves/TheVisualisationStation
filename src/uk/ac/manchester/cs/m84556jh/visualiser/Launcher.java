@@ -86,7 +86,8 @@ public class Launcher extends PApplet {
     	eachVisSeconds = w.shuffleNumSeconds;
     	
     	//If drawing a circle, size of buffer must be minimum of width and height
-    	if(visType == "Circle")
+    	//Therefore must also be minimum of width and height if shuffling
+    	if(visType == "Circle" || visType == "ran")
     		pixelBuffer = new CBCol(min(width,height));
     	else
     		pixelBuffer = new CBCol(width);
