@@ -34,5 +34,4 @@ public class RainingParticleVisualisation extends ParticleVisualisation{
 		drawKeyBorder(keyCol, 60);
 	}
 	
-	
 }

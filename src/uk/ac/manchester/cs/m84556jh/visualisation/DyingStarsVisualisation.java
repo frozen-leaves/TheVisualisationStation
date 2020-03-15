@@ -43,7 +43,5 @@ public class DyingStarsVisualisation extends ParticleVisualisation{
 	public void afterParticles(Col keyCol) {
 		//DO NOTHING
 	}
-	
-	
 
 }

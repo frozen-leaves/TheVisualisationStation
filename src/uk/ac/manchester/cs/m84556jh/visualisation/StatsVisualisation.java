@@ -44,6 +44,6 @@ public class StatsVisualisation extends Visualisation{
 				lastCol = ampCol[i];
 			}
 		}
-
 	}
+	
 }

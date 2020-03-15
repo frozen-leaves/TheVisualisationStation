@@ -63,4 +63,5 @@ public class CBDouble extends CB<Double> {
 			varSum += Math.pow(read() - avg, 2);
 		return varSum/buf.size();
 	}
+	
 }

@@ -58,6 +58,6 @@ public class Key {
 		int colSat = pal.getCol(index).getSat();
 		int colBri = pal.getCol(index).getBri();
 		return new Col(colHue, colSat, colBri);
-		
 	}
+	
 }

@@ -41,4 +41,5 @@ public class VertSize {
 		}
 		return curPerc;
 	}
+	
 }

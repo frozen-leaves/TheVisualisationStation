@@ -22,4 +22,5 @@ public class RectangleVisualisation extends BufferVisualisation{
 	public void drawShape(int size, double vertPerc) {
 		app.rect((float)(app.width/2),(float)(app.height/2),(float)size,(float)(app.height*vertPerc));
 	}
+	
 }

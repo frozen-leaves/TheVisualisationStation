@@ -49,7 +49,5 @@ public class CBCol extends CB<Col> {
 		prevSize = curSize;
 		return pixelBufArray;
 	}
-	
-	
 
 }

@@ -37,5 +37,6 @@ public class SpiralVisualisation extends ParticleVisualisation{
 		//Update the degree to emit the particle
 		emitAngle = (emitAngle + emitAngleInc)%360;	
 	}
+	
 }
 

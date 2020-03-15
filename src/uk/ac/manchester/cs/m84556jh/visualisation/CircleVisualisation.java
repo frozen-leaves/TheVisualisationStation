@@ -21,4 +21,5 @@ public class CircleVisualisation extends BufferVisualisation{
 	public void drawShape(int size, double vertPerc) {
 		app.ellipse((float)(app.width/2), (float)(app.height/2), (float)size, (float)(size*vertPerc));
 	}
+	
 }

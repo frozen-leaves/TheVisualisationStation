@@ -14,7 +14,6 @@ public class BPM {
 	private boolean beat = false;
 	private double bpm;
 	
-	
 	public BPM(int ampBufSize, int bpmBufSize, int fps, int fSubBands, int isBeatNumBands){
 		this.ampBuf = new CBDouble[fSubBands];
 		this.bpmBuf = new CBInteger(bpmBufSize);

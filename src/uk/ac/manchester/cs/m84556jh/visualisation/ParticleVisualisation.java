@@ -65,10 +65,6 @@ public abstract class ParticleVisualisation extends Visualisation{
 		
 		//Do after drawing particles, may draw key
 		afterParticles(key.getCol(cp));
-		
-		
-		
-		
 	}
 
 }

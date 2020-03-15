@@ -42,5 +42,6 @@ public class RandomTriangleVisualisation extends ParticleVisualisation{
 	public void afterParticles(Col keyCol) {
 		drawKeyBorder(keyCol, 60);
 	}
+	
 }
 
